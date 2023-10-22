@@ -45,6 +45,7 @@ dependencies:
   lottie:
   url_launcher: ^6.1.14
   font_awesome_flutter: ^10.6.0
+  flutter_slidable: ^3.0.0
 
 dev_dependencies:
   flutter_test:

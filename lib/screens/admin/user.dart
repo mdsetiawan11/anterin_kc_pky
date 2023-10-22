@@ -26,6 +26,7 @@ class _AdminProfilState extends State<AdminProfil> {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
     localStorage.remove('role');
 
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(

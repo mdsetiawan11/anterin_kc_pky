@@ -4,6 +4,7 @@ import 'package:anterin_kc_pky/models/admin/permintaan_model.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 
 class AdminPermintaan extends StatefulWidget {
@@ -64,44 +65,70 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                     itemCount: permintaans.length,
                     itemBuilder: (context, index) {
                       return Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Tanggal Pengajuan'),
-                                  Text('Nama Pengaju'),
-                                  Text('Bagian Pengaju'),
-                                  Text('Hari'),
-                                  Text('Tanggal Berangkat'),
-                                  Text('Jam Berangkat'),
-                                  Text('Jam Kembali'),
-                                  Text('Tujuan'),
-                                  Text('Kegiatan'),
-                                  Text('Keterangan'),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                      ' : ${permintaans[index].tanggalPengajuan}'),
-                                  Text(' : ${permintaans[index].namaPengaju}'),
-                                  Text(
-                                      ' : ${permintaans[index].bagianPengaju}'),
-                                  Text(' : ${permintaans[index].hari}'),
-                                  Text(
-                                      ' : ${permintaans[index].tanggalBerangkat}'),
-                                  Text(' : ${permintaans[index].jamBerangkat}'),
-                                  Text(' : ${permintaans[index].jamKembali}'),
-                                  Text(' : ${permintaans[index].tujuan}'),
-                                  Text(' : ${permintaans[index].kegiatan}'),
-                                  Text(' : ${permintaans[index].keterangan}'),
-                                ],
-                              )
-                            ],
+                        child: Slidable(
+                          startActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {},
+                                  backgroundColor: Colors.green,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.check,
+                                  label: 'Approve',
+                                ),
+                              ]),
+                          endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (context) {},
+                                  backgroundColor: Colors.orange,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.update,
+                                  label: 'Update',
+                                ),
+                              ]),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                const Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('Tanggal Pengajuan'),
+                                    Text('Nama Pengaju'),
+                                    Text('Bagian Pengaju'),
+                                    Text('Hari'),
+                                    Text('Tanggal Berangkat'),
+                                    Text('Jam Berangkat'),
+                                    Text('Jam Kembali'),
+                                    Text('Tujuan'),
+                                    Text('Kegiatan'),
+                                    Text('Keterangan'),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        ' : ${permintaans[index].tanggalPengajuan}'),
+                                    Text(
+                                        ' : ${permintaans[index].namaPengaju}'),
+                                    Text(
+                                        ' : ${permintaans[index].bagianPengaju}'),
+                                    Text(' : ${permintaans[index].hari}'),
+                                    Text(
+                                        ' : ${permintaans[index].tanggalBerangkat}'),
+                                    Text(
+                                        ' : ${permintaans[index].jamBerangkat}'),
+                                    Text(' : ${permintaans[index].jamKembali}'),
+                                    Text(' : ${permintaans[index].tujuan}'),
+                                    Text(' : ${permintaans[index].kegiatan}'),
+                                    Text(' : ${permintaans[index].keterangan}'),
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );
