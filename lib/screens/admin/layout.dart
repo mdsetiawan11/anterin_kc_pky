@@ -1,6 +1,8 @@
+import 'package:anterin_kc_pky/screens/admin/permintaan.dart';
 import 'package:anterin_kc_pky/screens/admin/user.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:flutter/material.dart';
+
 import 'package:sliding_clipped_nav_bar/sliding_clipped_nav_bar.dart';
 
 class AdminLayout extends StatefulWidget {
@@ -48,11 +50,11 @@ class _AdminLayoutState extends State<AdminLayout> {
             title: 'Dashboard',
           ),
           BarItem(
-            icon: Icons.list_alt_rounded,
+            icon: Icons.task_rounded,
             title: 'Permintaan',
           ),
           BarItem(
-            icon: Icons.manage_accounts,
+            icon: Icons.group,
             title: 'Pegawai',
           ),
           BarItem(
@@ -74,14 +76,7 @@ List<Widget> _pages = <Widget>[
       color: Colors.brown,
     ),
   ),
-  Container(
-    alignment: Alignment.center,
-    child: const Icon(
-      Icons.search,
-      size: 56,
-      color: Colors.brown,
-    ),
-  ),
+  const AdminPermintaan(),
   Container(
     alignment: Alignment.center,
     child: const Icon(

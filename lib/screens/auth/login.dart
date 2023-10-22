@@ -6,6 +6,7 @@ import 'package:anterin_kc_pky/screens/admin/layout.dart';
 import 'package:anterin_kc_pky/screens/driver/layout.dart';
 import 'package:anterin_kc_pky/screens/user/layout.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
+import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -40,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Future login() async {
     try {
-      var url = Uri.parse('https://anterin.jekaen-pky.com/api/login');
+      var url = Uri.parse('${apiUrl}login');
       var response = await http.post(
         url,
         body: {
