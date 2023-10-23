@@ -1,3 +1,4 @@
+import 'package:anterin_kc_pky/screens/admin/pegawai.dart';
 import 'package:anterin_kc_pky/screens/admin/permintaan.dart';
 import 'package:anterin_kc_pky/screens/admin/user.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
@@ -77,13 +78,6 @@ List<Widget> _pages = <Widget>[
     ),
   ),
   const AdminPermintaan(),
-  Container(
-    alignment: Alignment.center,
-    child: const Icon(
-      Icons.bolt,
-      size: 56,
-      color: Colors.brown,
-    ),
-  ),
+  const AdminPegawai(),
   const AdminProfil()
 ];

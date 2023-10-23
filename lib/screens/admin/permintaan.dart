@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:anterin_kc_pky/models/admin/permintaan_model.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 class AdminPermintaan extends StatefulWidget {
@@ -21,25 +23,26 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
     final response = await http.get(Uri.parse('${apiUrl}rekap'));
 
     var data = jsonDecode(response.body);
-
-    for (var singleData in data) {
-      PermintaanModel permintaan = PermintaanModel(
-        id: singleData['id'],
-        tanggalPengajuan: DateTime.parse(singleData['tanggal_pengajuan']),
-        usernamePengaju: singleData['username_pengaju'],
-        namaPengaju: singleData['nama_pengaju'],
-        bagianPengaju: singleData['bagian_pengaju'],
-        hari: singleData['hari'],
-        tanggalBerangkat: DateTime.parse(singleData['tanggal_berangkat']),
-        jamBerangkat: singleData['jam_berangkat'],
-        jamKembali: singleData['jam_kembali'],
-        tujuan: singleData['tujuan'],
-        kegiatan: singleData['kegiatan'],
-        usernameDriver: singleData['username_driver'],
-        namaDriver: singleData['nama_driver'],
-        keterangan: singleData['keterangan'],
-      );
-      permintaans.add(permintaan);
+    if (data.length > 0) {
+      for (var singleData in data) {
+        PermintaanModel permintaan = PermintaanModel(
+          id: singleData['id'],
+          tanggalPengajuan: DateTime.parse(singleData['tanggal_pengajuan']),
+          usernamePengaju: singleData['username_pengaju'],
+          namaPengaju: singleData['nama_pengaju'],
+          bagianPengaju: singleData['bagian_pengaju'],
+          hari: singleData['hari'],
+          tanggalBerangkat: DateTime.parse(singleData['tanggal_berangkat']),
+          jamBerangkat: singleData['jam_berangkat'],
+          jamKembali: singleData['jam_kembali'],
+          tujuan: singleData['tujuan'],
+          kegiatan: singleData['kegiatan'],
+          usernameDriver: singleData['username_driver'],
+          namaDriver: singleData['nama_driver'],
+          keterangan: singleData['keterangan'],
+        );
+        permintaans.add(permintaan);
+      }
     }
   }
 
@@ -66,26 +69,30 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                     itemBuilder: (context, index) {
                       return Card(
                         child: Slidable(
-                          startActionPane: ActionPane(
+                          endActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
                                 SlidableAction(
-                                  onPressed: (context) {},
+                                  onPressed: (context) {
+                                    approve(permintaans[index].id);
+                                  },
                                   backgroundColor: Colors.green,
                                   foregroundColor: Colors.white,
                                   icon: Icons.check,
                                   label: 'Approve',
                                 ),
                               ]),
-                          endActionPane: ActionPane(
+                          startActionPane: ActionPane(
                               motion: const ScrollMotion(),
                               children: [
                                 SlidableAction(
-                                  onPressed: (context) {},
-                                  backgroundColor: Colors.orange,
+                                  onPressed: (context) {
+                                    cancel(permintaans[index].id);
+                                  },
+                                  backgroundColor: Colors.red,
                                   foregroundColor: Colors.white,
                                   icon: Icons.update,
-                                  label: 'Update',
+                                  label: 'Cancel',
                                 ),
                               ]),
                           child: Padding(
@@ -104,6 +111,7 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                                     Text('Jam Kembali'),
                                     Text('Tujuan'),
                                     Text('Kegiatan'),
+                                    Text('Nama Driver'),
                                     Text('Keterangan'),
                                   ],
                                 ),
@@ -124,6 +132,7 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                                     Text(' : ${permintaans[index].jamKembali}'),
                                     Text(' : ${permintaans[index].tujuan}'),
                                     Text(' : ${permintaans[index].kegiatan}'),
+                                    Text(' : ${permintaans[index].namaDriver}'),
                                     Text(' : ${permintaans[index].keterangan}'),
                                   ],
                                 )
@@ -137,5 +146,105 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
             }),
       ),
     );
+  }
+
+  void approve(String id) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.scale,
+      title: 'Setujui Permintaan?',
+      btnCancelOnPress: () {},
+      btnOkOnPress: () async {
+        print(id);
+        try {
+          var url = Uri.parse('https://anterin.jekaen-pky.com/api/approve/');
+          var response = await http.put(
+            url,
+            body: {
+              "id": id,
+            },
+          );
+
+          if (response.statusCode == 200) {
+            setState(() {
+              permintaans = [];
+            });
+            Fluttertoast.showToast(
+              msg: 'Permintaan berhasil disetujui',
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+            );
+          } else {
+            Fluttertoast.showToast(
+              msg: 'Permintaan gagal disetujui, silahkan coba lagi',
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+            );
+          }
+        } catch (e) {
+          Fluttertoast.showToast(
+            msg: 'Permintaan gagal disetujui, silahkan coba lagi',
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        }
+      },
+      btnCancelText: 'Batal',
+      btnOkText: 'Ya',
+    ).show();
+  }
+
+  void cancel(String id) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.scale,
+      title: 'Batalkan Permintaan?',
+      btnCancelOnPress: () {},
+      btnOkOnPress: () async {
+        print(id);
+        try {
+          var url = Uri.parse('https://anterin.jekaen-pky.com/api/cancel/');
+          var response = await http.put(
+            url,
+            body: {
+              "id": id,
+            },
+          );
+
+          if (response.statusCode == 200) {
+            setState(() {
+              permintaans = [];
+            });
+            Fluttertoast.showToast(
+              msg: 'Permintaan berhasil dibatalkan',
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+            );
+          } else {
+            Fluttertoast.showToast(
+              msg: 'Permintaan gagal dibatalkan, silahkan coba lagi',
+              gravity: ToastGravity.CENTER,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+            );
+          }
+        } catch (e) {
+          Fluttertoast.showToast(
+            msg: 'Permintaan gagal dibatalkan, silahkan coba lagi',
+            gravity: ToastGravity.CENTER,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
+        }
+      },
+      btnCancelText: 'Batal',
+      btnOkText: 'Ya',
+    ).show();
   }
 }
