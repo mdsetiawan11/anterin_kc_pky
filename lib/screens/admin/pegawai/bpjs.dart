@@ -35,23 +35,32 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-          future: getPegawai(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              return ListView.builder(
-                  itemCount: pegawai.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(pegawai[index].nama),
-                    );
-                  });
-            }
-          }),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: FutureBuilder(
+            future: getPegawai(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ListView.builder(
+                    itemCount: pegawai.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: ListTile(
+                          title: Text(
+                            pegawai[index].nama,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          subtitle: Text(pegawai[index].bagian),
+                        ),
+                      );
+                    });
+              }
+            }),
+      ),
     );
   }
 }

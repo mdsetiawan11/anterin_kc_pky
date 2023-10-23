@@ -1,4 +1,5 @@
 import 'package:anterin_kc_pky/screens/admin/pegawai/bpjs.dart';
+import 'package:anterin_kc_pky/screens/admin/pegawai/driver.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,7 @@ class _AdminPegawaiState extends State<AdminPegawai> {
                   )
                 ]),
           ),
-          body: const TabBarView(children: [PegawaiBPJS(), Text('Driver')]),
+          body: const TabBarView(children: [PegawaiBPJS(), DriverBPJS()]),
         ));
   }
 }
