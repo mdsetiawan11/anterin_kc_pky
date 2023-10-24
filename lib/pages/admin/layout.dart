@@ -1,7 +1,7 @@
-import 'package:anterin_kc_pky/screens/admin/dashboard.dart';
-import 'package:anterin_kc_pky/screens/admin/pegawai.dart';
-import 'package:anterin_kc_pky/screens/admin/permintaan.dart';
-import 'package:anterin_kc_pky/screens/admin/profil.dart';
+import 'package:anterin_kc_pky/pages/admin/dashboard.dart';
+import 'package:anterin_kc_pky/pages/admin/pegawai.dart';
+import 'package:anterin_kc_pky/pages/admin/permintaan.dart';
+import 'package:anterin_kc_pky/pages/admin/profil.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:flutter/material.dart';
 

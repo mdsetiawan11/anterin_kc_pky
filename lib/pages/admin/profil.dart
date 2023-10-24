@@ -1,4 +1,4 @@
-import 'package:anterin_kc_pky/screens/auth/login.dart';
+import 'package:anterin_kc_pky/pages/auth/login.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

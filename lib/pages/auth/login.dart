@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 
-import 'package:anterin_kc_pky/screens/admin/layout.dart';
-import 'package:anterin_kc_pky/screens/driver/layout.dart';
-import 'package:anterin_kc_pky/screens/user/layout.dart';
+import 'package:anterin_kc_pky/pages/admin/layout.dart';
+import 'package:anterin_kc_pky/pages/driver/layout.dart';
+import 'package:anterin_kc_pky/pages/user/layout.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:flutter/material.dart';

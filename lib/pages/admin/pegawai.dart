@@ -1,5 +1,5 @@
-import 'package:anterin_kc_pky/screens/admin/pegawai/bpjs.dart';
-import 'package:anterin_kc_pky/screens/admin/pegawai/driver.dart';
+import 'package:anterin_kc_pky/pages/admin/pegawai/bpjs.dart';
+import 'package:anterin_kc_pky/pages/admin/pegawai/driver.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:flutter/material.dart';
 
