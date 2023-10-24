@@ -73,6 +73,8 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                     title: const Text('Tambah Data Pegawai'),
                     actions: [
                       MaterialButton(
+                        color: Warna.utama,
+                        textColor: Colors.white,
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
                             try {
@@ -105,7 +107,6 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                             _password.clear();
                           }
                           Navigator.of(context).pop();
-                          setState(() {});
                         },
                         child: const Text('Simpan'),
                       )
@@ -168,7 +169,11 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                 });
               });
         },
-        child: const Icon(Icons.person_add),
+        backgroundColor: Warna.utama,
+        child: const Icon(
+          Icons.person_add,
+          color: Colors.white,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
