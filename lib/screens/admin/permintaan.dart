@@ -22,8 +22,8 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
   Future getPermintaan() async {
     final response = await http.get(Uri.parse('${apiUrl}rekap'));
 
-    var data = jsonDecode(response.body);
-    if (data.length > 0) {
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
       for (var singleData in data) {
         PermintaanModel permintaan = PermintaanModel(
           id: singleData['id'],
@@ -62,6 +62,11 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),
+                );
+              }
+              if (permintaans.isEmpty) {
+                return const Center(
+                  child: Text('Tidak ada data'),
                 );
               } else {
                 return ListView.builder(

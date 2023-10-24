@@ -29,9 +29,9 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
 
   Future getPegawai() async {
     final response = await http.get(Uri.parse('${apiUrl}allpegawai'));
-    var data = jsonDecode(response.body);
 
-    if (data.length > 0) {
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
       for (var singleData in data) {
         UserModel peg = UserModel(
             id: singleData['id'],
@@ -57,6 +57,10 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
     _password.dispose();
 
     super.dispose();
+  }
+
+  callback() {
+    setState(() {});
   }
 
   @override
@@ -107,6 +111,9 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                             _password.clear();
                           }
                           // ignore: use_build_context_synchronously
+
+                          callback();
+                          Navigator.pop(context);
                         },
                         child: const Text('Simpan'),
                       )
@@ -182,6 +189,11 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
                   child: CircularProgressIndicator(),
+                );
+              }
+              if (pegawai.isEmpty) {
+                return const Center(
+                  child: Text('Tidak ada data'),
                 );
               } else {
                 return ListView.builder(

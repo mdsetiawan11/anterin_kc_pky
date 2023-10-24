@@ -1,6 +1,7 @@
+import 'package:anterin_kc_pky/screens/admin/dashboard.dart';
 import 'package:anterin_kc_pky/screens/admin/pegawai.dart';
 import 'package:anterin_kc_pky/screens/admin/permintaan.dart';
-import 'package:anterin_kc_pky/screens/admin/user.dart';
+import 'package:anterin_kc_pky/screens/admin/profil.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -47,20 +48,20 @@ class _AdminLayoutState extends State<AdminLayout> {
         selectedIndex: selectedIndex,
         barItems: <BarItem>[
           BarItem(
-            icon: Icons.dashboard,
+            icon: Icons.dashboard_rounded,
             title: 'Dashboard',
           ),
           BarItem(
-            icon: Icons.task_rounded,
+            icon: Icons.checklist_rounded,
             title: 'Permintaan',
           ),
           BarItem(
-            icon: Icons.group,
+            icon: Icons.group_rounded,
             title: 'Pegawai',
           ),
           BarItem(
-            icon: Icons.person,
-            title: 'User',
+            icon: Icons.person_rounded,
+            title: 'Profil',
           ),
         ],
       ),
@@ -69,14 +70,7 @@ class _AdminLayoutState extends State<AdminLayout> {
 }
 
 List<Widget> _pages = <Widget>[
-  Container(
-    alignment: Alignment.center,
-    child: const Icon(
-      Icons.event,
-      size: 56,
-      color: Colors.brown,
-    ),
-  ),
+  const AdminDashboard(),
   const AdminPermintaan(),
   const AdminPegawai(),
   const AdminProfil()
