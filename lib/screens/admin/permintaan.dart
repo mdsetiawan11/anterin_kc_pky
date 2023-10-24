@@ -104,22 +104,48 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                                   children: [
                                     (permintaans[index].keterangan ==
                                             "permintaan")
-                                        ? Text(
-                                            permintaans[index].keterangan,
-                                            style:
-                                                TextStyle(color: Colors.orange),
+                                        ? Card(
+                                            color: Colors.orange,
+                                            elevation: 0,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                permintaans[index].keterangan,
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
                                           )
                                         : (permintaans[index].keterangan ==
                                                 "batal")
-                                            ? Text(
-                                                permintaans[index].keterangan,
-                                                style: TextStyle(
-                                                    color: Colors.red),
+                                            ? Card(
+                                                color: Colors.red,
+                                                elevation: 0,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    permintaans[index]
+                                                        .keterangan,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
                                               )
-                                            : Text(
-                                                permintaans[index].keterangan,
-                                                style: TextStyle(
-                                                    color: Colors.green),
+                                            : Card(
+                                                elevation: 0,
+                                                color: Colors.green,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    permintaans[index]
+                                                        .keterangan,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
                                               ),
                                   ],
                                 ),
@@ -187,7 +213,6 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
       title: 'Setujui Permintaan?',
       btnCancelOnPress: () {},
       btnOkOnPress: () async {
-        print(id);
         try {
           var url = Uri.parse('https://anterin.jekaen-pky.com/api/approve/');
           var response = await http.put(
@@ -237,7 +262,6 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
       title: 'Batalkan Permintaan?',
       btnCancelOnPress: () {},
       btnOkOnPress: () async {
-        print(id);
         try {
           var url = Uri.parse('https://anterin.jekaen-pky.com/api/cancel/');
           var response = await http.put(

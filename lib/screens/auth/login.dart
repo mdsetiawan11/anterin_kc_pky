@@ -50,7 +50,6 @@ class _LoginPageState extends State<LoginPage> {
         },
       );
       var data = jsonDecode(response.body);
-      print(data);
       if (data == "Username atau Password salah.") {
         return Fluttertoast.showToast(
             msg: 'Username atau password salah',

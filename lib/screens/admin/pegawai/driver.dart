@@ -57,7 +57,7 @@ class _DriverBPJSState extends State<DriverBPJS> {
                         child: ListTile(
                           title: Text(
                             driver[index].nama,
-                            style: TextStyle(fontSize: 18),
+                            style: const TextStyle(fontSize: 18),
                           ),
                         ),
                       );

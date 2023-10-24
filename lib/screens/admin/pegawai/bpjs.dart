@@ -106,7 +106,7 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                             _nama.clear();
                             _password.clear();
                           }
-                          Navigator.of(context).pop();
+                          // ignore: use_build_context_synchronously
                         },
                         child: const Text('Simpan'),
                       )
@@ -149,7 +149,6 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                                 onChanged: (String? newValue) {
                                   setState(() {
                                     selectedBagian = newValue!;
-                                    print(selectedBagian);
                                   });
                                 }),
                             TextFormField(
