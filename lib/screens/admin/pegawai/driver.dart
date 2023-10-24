@@ -35,6 +35,11 @@ class _DriverBPJSState extends State<DriverBPJS> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.person_add),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: FutureBuilder(

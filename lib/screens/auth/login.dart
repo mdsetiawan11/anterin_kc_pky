@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
         }
         Fluttertoast.showToast(
             msg: 'Selamat datang di Anterin KC PKY',
-            backgroundColor: Colors.green.shade800,
+            backgroundColor: Warna.utama,
             gravity: ToastGravity.CENTER,
             textColor: Colors.white,
             toastLength: Toast.LENGTH_LONG);
