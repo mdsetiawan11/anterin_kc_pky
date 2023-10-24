@@ -97,45 +97,76 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                               ]),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Row(
+                            child: Column(
                               children: [
-                                const Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Text('Tanggal Pengajuan'),
-                                    Text('Nama Pengaju'),
-                                    Text('Bagian Pengaju'),
-                                    Text('Hari'),
-                                    Text('Tanggal Berangkat'),
-                                    Text('Jam Berangkat'),
-                                    Text('Jam Kembali'),
-                                    Text('Tujuan'),
-                                    Text('Kegiatan'),
-                                    Text('Nama Driver'),
-                                    Text('Keterangan'),
+                                    (permintaans[index].keterangan ==
+                                            "permintaan")
+                                        ? Text(
+                                            permintaans[index].keterangan,
+                                            style:
+                                                TextStyle(color: Colors.orange),
+                                          )
+                                        : (permintaans[index].keterangan ==
+                                                "batal")
+                                            ? Text(
+                                                permintaans[index].keterangan,
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              )
+                                            : Text(
+                                                permintaans[index].keterangan,
+                                                style: TextStyle(
+                                                    color: Colors.green),
+                                              ),
                                   ],
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                        ' : ${permintaans[index].tanggalPengajuan}'),
-                                    Text(
-                                        ' : ${permintaans[index].namaPengaju}'),
-                                    Text(
-                                        ' : ${permintaans[index].bagianPengaju}'),
-                                    Text(' : ${permintaans[index].hari}'),
-                                    Text(
-                                        ' : ${permintaans[index].tanggalBerangkat}'),
-                                    Text(
-                                        ' : ${permintaans[index].jamBerangkat}'),
-                                    Text(' : ${permintaans[index].jamKembali}'),
-                                    Text(' : ${permintaans[index].tujuan}'),
-                                    Text(' : ${permintaans[index].kegiatan}'),
-                                    Text(' : ${permintaans[index].namaDriver}'),
-                                    Text(' : ${permintaans[index].keterangan}'),
+                                    const Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('Tanggal Pengajuan'),
+                                        Text('Nama Pengaju'),
+                                        Text('Bagian Pengaju'),
+                                        Text('Hari'),
+                                        Text('Tanggal Berangkat'),
+                                        Text('Jam Berangkat'),
+                                        Text('Jam Kembali'),
+                                        Text('Tujuan'),
+                                        Text('Kegiatan'),
+                                        Text('Nama Driver'),
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            ' : ${permintaans[index].tanggalPengajuan}'),
+                                        Text(
+                                            ' : ${permintaans[index].namaPengaju}'),
+                                        Text(
+                                            ' : ${permintaans[index].bagianPengaju}'),
+                                        Text(' : ${permintaans[index].hari}'),
+                                        Text(
+                                            ' : ${permintaans[index].tanggalBerangkat}'),
+                                        Text(
+                                            ' : ${permintaans[index].jamBerangkat}'),
+                                        Text(
+                                            ' : ${permintaans[index].jamKembali}'),
+                                        Text(' : ${permintaans[index].tujuan}'),
+                                        Text(
+                                            ' : ${permintaans[index].kegiatan}'),
+                                        Text(
+                                            ' : ${permintaans[index].namaDriver}'),
+                                      ],
+                                    )
                                   ],
-                                )
+                                ),
                               ],
                             ),
                           ),
