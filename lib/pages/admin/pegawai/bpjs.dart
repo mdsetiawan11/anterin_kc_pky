@@ -266,6 +266,9 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                               textColor: Colors.white);
                           callback();
                           Navigator.pop(context);
+                          _username.clear();
+                          _nama.clear();
+                          _password.clear();
                         }
                       } catch (e) {
                         Fluttertoast.showToast(
@@ -275,9 +278,6 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                             backgroundColor: Colors.red,
                             textColor: Colors.white);
                       }
-                      _username.clear();
-                      _nama.clear();
-                      _password.clear();
                     }
                     // ignore: use_build_context_synchronously
                   },
