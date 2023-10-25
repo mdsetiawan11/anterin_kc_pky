@@ -61,97 +61,7 @@ class _DriverBPJSState extends State<DriverBPJS> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Warna.utama,
         onPressed: () {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return StatefulBuilder(builder: (context, setState) {
-                  return AlertDialog(
-                    title: const Text('Tambah Data Driver'),
-                    actions: [
-                      MaterialButton(
-                        color: Warna.utama,
-                        textColor: Colors.white,
-                        onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            try {
-                              var response = await http.post(
-                                  Uri.parse('${apiUrl}tambahdriver'),
-                                  body: {
-                                    "username": _username.text.trim(),
-                                    "nama": _nama.text.trim(),
-                                    "password": _password.text.trim()
-                                  });
-                              if (response.statusCode == 200) {
-                                Fluttertoast.showToast(
-                                    msg: 'Tambah Data Berhasil',
-                                    toastLength: Toast.LENGTH_LONG,
-                                    gravity: ToastGravity.CENTER,
-                                    backgroundColor: Warna.utama,
-                                    textColor: Colors.white);
-                              }
-                            } catch (e) {
-                              Fluttertoast.showToast(
-                                  msg: 'Tambah Data Gagal',
-                                  toastLength: Toast.LENGTH_LONG,
-                                  gravity: ToastGravity.CENTER,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white);
-                            }
-                            _username.clear();
-                            _nama.clear();
-                            _password.clear();
-                          }
-                          // ignore: use_build_context_synchronously
-
-                          callback();
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Simpan'),
-                      )
-                    ],
-                    content: Form(
-                        key: _formKey,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextFormField(
-                              controller: _username,
-                              decoration:
-                                  const InputDecoration(labelText: 'username'),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'username tidak boleh kosong';
-                                }
-                                return null;
-                              },
-                            ),
-                            TextFormField(
-                              controller: _nama,
-                              decoration:
-                                  const InputDecoration(labelText: 'nama'),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'nama tidak boleh kosong';
-                                }
-                                return null;
-                              },
-                            ),
-                            TextFormField(
-                              controller: _password,
-                              decoration:
-                                  const InputDecoration(labelText: 'password'),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'password tidak boleh kosong';
-                                }
-                                return null;
-                              },
-                            )
-                          ],
-                        )),
-                  );
-                });
-              });
+          tambah();
         },
         child: const Icon(
           Icons.person_add,
@@ -178,6 +88,10 @@ class _DriverBPJSState extends State<DriverBPJS> {
                     itemBuilder: (context, index) {
                       return Card(
                         child: ListTile(
+                          onTap: () {
+                            update(driver[index].id, driver[index].username,
+                                driver[index].nama);
+                          },
                           title: Text(
                             driver[index].nama,
                             style: const TextStyle(fontSize: 18),
@@ -189,5 +103,195 @@ class _DriverBPJSState extends State<DriverBPJS> {
             }),
       ),
     );
+  }
+
+  void tambah() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Tambah Data Driver'),
+              actions: [
+                MaterialButton(
+                  color: Warna.utama,
+                  textColor: Colors.white,
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        var response = await http
+                            .post(Uri.parse('${apiUrl}tambahdriver'), body: {
+                          "username": _username.text.trim(),
+                          "nama": _nama.text.trim(),
+                          "password": _password.text.trim()
+                        });
+                        if (response.statusCode == 200) {
+                          Fluttertoast.showToast(
+                              msg: 'Tambah Data Berhasil',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor: Warna.utama,
+                              textColor: Colors.white);
+                        }
+                      } catch (e) {
+                        Fluttertoast.showToast(
+                            msg: 'Tambah Data Gagal',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white);
+                      }
+                      _username.clear();
+                      _nama.clear();
+                      _password.clear();
+                    }
+                    // ignore: use_build_context_synchronously
+
+                    callback();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Simpan'),
+                )
+              ],
+              content: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        controller: _username,
+                        decoration:
+                            const InputDecoration(labelText: 'username'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'username tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _nama,
+                        decoration: const InputDecoration(labelText: 'nama'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'nama tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _password,
+                        decoration:
+                            const InputDecoration(labelText: 'password'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'password tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      )
+                    ],
+                  )),
+            );
+          });
+        });
+  }
+
+  void update(
+    String id,
+    String username,
+    String nama,
+  ) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Tambah Data Driver'),
+              actions: [
+                MaterialButton(
+                  color: Warna.utama,
+                  textColor: Colors.white,
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        var response = await http
+                            .put(Uri.parse('${apiUrl}editdriver'), body: {
+                          "id": id,
+                          "username": _username.text.trim(),
+                          "nama": _nama.text.trim(),
+                          "password": _password.text.trim()
+                        });
+                        if (response.statusCode == 200) {
+                          Fluttertoast.showToast(
+                              msg: 'Tambah Data Berhasil',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              backgroundColor: Warna.utama,
+                              textColor: Colors.white);
+                        }
+                      } catch (e) {
+                        Fluttertoast.showToast(
+                            msg: 'Tambah Data Gagal',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white);
+                      }
+                      _username.clear();
+                      _nama.clear();
+                      _password.clear();
+                    }
+                    // ignore: use_build_context_synchronously
+
+                    callback();
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Simpan'),
+                )
+              ],
+              content: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        readOnly: true,
+                        controller: TextEditingController(text: username),
+                        decoration:
+                            const InputDecoration(labelText: 'username'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'username tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: TextEditingController(text: nama),
+                        decoration: const InputDecoration(labelText: 'nama'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'nama tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      ),
+                      TextFormField(
+                        controller: _password,
+                        decoration:
+                            const InputDecoration(labelText: 'password'),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'password tidak boleh kosong';
+                          }
+                          return null;
+                        },
+                      )
+                    ],
+                  )),
+            );
+          });
+        });
   }
 }

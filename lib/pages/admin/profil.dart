@@ -73,8 +73,13 @@ class _AdminProfilState extends State<AdminProfil> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const CircleAvatar(
+                CircleAvatar(
+                  backgroundColor: Colors.white,
                   radius: 60,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Image.asset('assets/man.png'),
+                  ),
                 ),
                 Text(
                   nama,
