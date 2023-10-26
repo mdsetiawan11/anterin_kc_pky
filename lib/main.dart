@@ -1,6 +1,5 @@
 import 'package:anterin_kc_pky/pages/admin/layout.dart';
 import 'package:anterin_kc_pky/pages/auth/intro.dart';
-import 'package:anterin_kc_pky/pages/auth/login.dart';
 import 'package:anterin_kc_pky/pages/driver/layout.dart';
 import 'package:anterin_kc_pky/pages/user/layout.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
