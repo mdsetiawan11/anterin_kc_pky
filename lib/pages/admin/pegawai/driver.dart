@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, duplicate_ignore
+
 import 'dart:convert';
 
 import 'package:anterin_kc_pky/models/admin/user_model.dart';
@@ -213,6 +215,7 @@ class _DriverBPJSState extends State<DriverBPJS> {
                 MaterialButton(
                   color: Warna.utama,
                   textColor: Colors.white,
+                  // ignore: duplicate_ignore
                   onPressed: () async {
                     if (_updateFormkey.currentState!.validate()) {
                       try {
@@ -224,7 +227,7 @@ class _DriverBPJSState extends State<DriverBPJS> {
                         });
                         if (response.statusCode == 200) {
                           Fluttertoast.showToast(
-                              msg: 'Tambah Data Berhasil',
+                              msg: 'Update Data Berhasil',
                               toastLength: Toast.LENGTH_LONG,
                               gravity: ToastGravity.CENTER,
                               backgroundColor: Warna.utama,
@@ -237,14 +240,13 @@ class _DriverBPJSState extends State<DriverBPJS> {
                         }
                       } catch (e) {
                         Fluttertoast.showToast(
-                            msg: 'Tambah Data Gagal',
+                            msg: 'Update Data Gagal',
                             toastLength: Toast.LENGTH_LONG,
                             gravity: ToastGravity.CENTER,
                             backgroundColor: Colors.red,
                             textColor: Colors.white);
                       }
                     }
-                    // ignore: use_build_context_synchronously
                   },
                   child: const Text('Simpan'),
                 )

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, duplicate_ignore
+
 import 'dart:convert';
 
 import 'package:anterin_kc_pky/models/admin/user_model.dart';
@@ -160,7 +162,7 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                       _nama.clear();
                       _password.clear();
                     }
-                    // ignore: use_build_context_synchronously
+
                     callback();
                     Navigator.pop(context);
                   },
@@ -253,10 +255,6 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                           "bagian": selectedBagian,
                           "password": _password.text.trim()
                         });
-                        print(id);
-                        print(nama);
-                        print(selectedBagian);
-                        print(_password.text.trim());
                         if (response.statusCode == 200) {
                           Fluttertoast.showToast(
                               msg: 'Update Data Berhasil',
