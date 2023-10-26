@@ -46,6 +46,12 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
     }
   }
 
+  Future refresh() async {
+    setState(() {
+      permintaans = [];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,158 +60,164 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
         title: const Text('Permintaan Driver'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FutureBuilder(
-            future: getPermintaan(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (permintaans.isEmpty) {
-                return const Center(
-                  child: Text('Tidak ada data'),
-                );
-              } else {
-                return ListView.builder(
-                    itemCount: permintaans.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: Slidable(
-                          endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) {
-                                    approve(permintaans[index].id);
-                                  },
-                                  backgroundColor: Colors.green,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.check,
-                                  label: 'Approve',
-                                ),
-                              ]),
-                          startActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (context) {
-                                    cancel(permintaans[index].id);
-                                  },
-                                  backgroundColor: Colors.red,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.update,
-                                  label: 'Cancel',
-                                ),
-                              ]),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    (permintaans[index].keterangan ==
-                                            "permintaan")
-                                        ? Card(
-                                            color: Colors.orange,
-                                            elevation: 0,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Text(
-                                                permintaans[index].keterangan,
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                              ),
-                                            ),
-                                          )
-                                        : (permintaans[index].keterangan ==
-                                                "batal")
-                                            ? Card(
-                                                color: Colors.red,
-                                                elevation: 0,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    permintaans[index]
-                                                        .keterangan,
-                                                    style: const TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                ),
-                                              )
-                                            : Card(
-                                                elevation: 0,
-                                                color: Colors.green,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    permintaans[index]
-                                                        .keterangan,
-                                                    style: const TextStyle(
-                                                        color: Colors.white),
-                                                  ),
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FutureBuilder(
+              future: getPermintaan(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (permintaans.isEmpty) {
+                  return const Center(
+                    child: Text('Tidak ada data'),
+                  );
+                } else {
+                  return ListView.builder(
+                      itemCount: permintaans.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Slidable(
+                            endActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (context) {
+                                      approve(permintaans[index].id);
+                                    },
+                                    backgroundColor: Colors.green,
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.check,
+                                    label: 'Approve',
+                                  ),
+                                ]),
+                            startActionPane: ActionPane(
+                                motion: const ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (context) {
+                                      cancel(permintaans[index].id);
+                                    },
+                                    backgroundColor: Colors.red,
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.update,
+                                    label: 'Cancel',
+                                  ),
+                                ]),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      (permintaans[index].keterangan ==
+                                              "permintaan")
+                                          ? Card(
+                                              color: Colors.orange,
+                                              elevation: 0,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  permintaans[index].keterangan,
+                                                  style: const TextStyle(
+                                                      color: Colors.white),
                                                 ),
                                               ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text('Tanggal Pengajuan'),
-                                        Text('Nama Pengaju'),
-                                        Text('Bagian Pengaju'),
-                                        Text('Hari'),
-                                        Text('Tanggal Berangkat'),
-                                        Text('Jam Berangkat'),
-                                        Text('Jam Kembali'),
-                                        Text('Tujuan'),
-                                        Text('Kegiatan'),
-                                        Text('Nama Driver'),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            ' : ${permintaans[index].tanggalPengajuan}'),
-                                        Text(
-                                            ' : ${permintaans[index].namaPengaju}'),
-                                        Text(
-                                            ' : ${permintaans[index].bagianPengaju}'),
-                                        Text(' : ${permintaans[index].hari}'),
-                                        Text(
-                                            ' : ${permintaans[index].tanggalBerangkat}'),
-                                        Text(
-                                            ' : ${permintaans[index].jamBerangkat}'),
-                                        Text(
-                                            ' : ${permintaans[index].jamKembali}'),
-                                        Text(' : ${permintaans[index].tujuan}'),
-                                        Text(
-                                            ' : ${permintaans[index].kegiatan}'),
-                                        Text(
-                                            ' : ${permintaans[index].namaDriver}'),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
+                                            )
+                                          : (permintaans[index].keterangan ==
+                                                  "batal")
+                                              ? Card(
+                                                  color: Colors.red,
+                                                  elevation: 0,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      permintaans[index]
+                                                          .keterangan,
+                                                      style: const TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                )
+                                              : Card(
+                                                  elevation: 0,
+                                                  color: Colors.green,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Text(
+                                                      permintaans[index]
+                                                          .keterangan,
+                                                      style: const TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                  ),
+                                                ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Tanggal Pengajuan'),
+                                          Text('Nama Pengaju'),
+                                          Text('Bagian Pengaju'),
+                                          Text('Hari'),
+                                          Text('Tanggal Berangkat'),
+                                          Text('Jam Berangkat'),
+                                          Text('Jam Kembali'),
+                                          Text('Tujuan'),
+                                          Text('Kegiatan'),
+                                          Text('Nama Driver'),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              ' : ${permintaans[index].tanggalPengajuan}'),
+                                          Text(
+                                              ' : ${permintaans[index].namaPengaju}'),
+                                          Text(
+                                              ' : ${permintaans[index].bagianPengaju}'),
+                                          Text(' : ${permintaans[index].hari}'),
+                                          Text(
+                                              ' : ${permintaans[index].tanggalBerangkat}'),
+                                          Text(
+                                              ' : ${permintaans[index].jamBerangkat}'),
+                                          Text(
+                                              ' : ${permintaans[index].jamKembali}'),
+                                          Text(
+                                              ' : ${permintaans[index].tujuan}'),
+                                          Text(
+                                              ' : ${permintaans[index].kegiatan}'),
+                                          Text(
+                                              ' : ${permintaans[index].namaDriver}'),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    });
-              }
-            }),
+                        );
+                      });
+                }
+              }),
+        ),
       ),
     );
   }

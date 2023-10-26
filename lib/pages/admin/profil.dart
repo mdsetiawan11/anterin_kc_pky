@@ -1,3 +1,4 @@
+import 'package:anterin_kc_pky/pages/auth/intro.dart';
 import 'package:anterin_kc_pky/pages/auth/login.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class _AdminProfilState extends State<AdminProfil> {
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-            builder: (BuildContext context) => const LoginPage()));
+            builder: (BuildContext context) => const IntroductionPage()));
   }
 
   @override

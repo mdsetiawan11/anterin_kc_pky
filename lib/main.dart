@@ -1,4 +1,5 @@
 import 'package:anterin_kc_pky/pages/admin/layout.dart';
+import 'package:anterin_kc_pky/pages/auth/intro.dart';
 import 'package:anterin_kc_pky/pages/auth/login.dart';
 import 'package:anterin_kc_pky/pages/driver/layout.dart';
 import 'package:anterin_kc_pky/pages/user/layout.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
         ),
         home: role == ""
-            ? const LoginPage()
+            ? const IntroductionPage()
             : role == "driver"
                 ? const DriverLayout()
                 : role == "user"
