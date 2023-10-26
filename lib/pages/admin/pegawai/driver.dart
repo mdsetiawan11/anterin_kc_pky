@@ -35,6 +35,7 @@ class _DriverBPJSState extends State<DriverBPJS> {
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _updateFormkey = GlobalKey<FormState>();
   final TextEditingController _username = TextEditingController();
   final TextEditingController _nama = TextEditingController();
 
@@ -207,18 +208,17 @@ class _DriverBPJSState extends State<DriverBPJS> {
         builder: (context) {
           return StatefulBuilder(builder: (context, setState) {
             return AlertDialog(
-              title: const Text('Tambah Data Driver'),
+              title: Text('Update Data Driver $nama'),
               actions: [
                 MaterialButton(
                   color: Warna.utama,
                   textColor: Colors.white,
                   onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
+                    if (_updateFormkey.currentState!.validate()) {
                       try {
                         var response = await http
                             .put(Uri.parse('${apiUrl}editdriver'), body: {
                           "id": id,
-                          "username": _username.text.trim(),
                           "nama": _nama.text.trim(),
                           "password": _password.text.trim()
                         });
@@ -229,6 +229,11 @@ class _DriverBPJSState extends State<DriverBPJS> {
                               gravity: ToastGravity.CENTER,
                               backgroundColor: Warna.utama,
                               textColor: Colors.white);
+                          callback();
+                          Navigator.pop(context);
+                          _username.clear();
+                          _nama.clear();
+                          _password.clear();
                         }
                       } catch (e) {
                         Fluttertoast.showToast(
@@ -238,20 +243,14 @@ class _DriverBPJSState extends State<DriverBPJS> {
                             backgroundColor: Colors.red,
                             textColor: Colors.white);
                       }
-                      _username.clear();
-                      _nama.clear();
-                      _password.clear();
                     }
                     // ignore: use_build_context_synchronously
-
-                    callback();
-                    Navigator.pop(context);
                   },
                   child: const Text('Simpan'),
                 )
               ],
               content: Form(
-                  key: _formKey,
+                  key: _updateFormkey,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -268,7 +267,7 @@ class _DriverBPJSState extends State<DriverBPJS> {
                         },
                       ),
                       TextFormField(
-                        controller: TextEditingController(text: nama),
+                        controller: _nama,
                         decoration: const InputDecoration(labelText: 'nama'),
                         validator: (value) {
                           if (value!.isEmpty) {

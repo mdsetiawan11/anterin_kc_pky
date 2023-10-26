@@ -238,7 +238,7 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text('Update Data Pegawai'),
+              title: Text('Update Data Pegawai $nama'),
               actions: [
                 MaterialButton(
                   color: Warna.utama,
@@ -249,7 +249,7 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                         var response = await http
                             .put(Uri.parse('${apiUrl}editpegawai'), body: {
                           "id": id,
-                          "nama": _username.text.trim(),
+                          "nama": _nama.text.trim(),
                           "bagian": selectedBagian,
                           "password": _password.text.trim()
                         });
@@ -290,7 +290,7 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       TextFormField(
-                        controller: _username,
+                        controller: TextEditingController(text: username),
                         readOnly: true,
                         decoration:
                             const InputDecoration(labelText: 'username'),
@@ -302,7 +302,7 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                         },
                       ),
                       TextFormField(
-                        controller: TextEditingController(text: nama),
+                        controller: _nama,
                         decoration: const InputDecoration(labelText: 'nama'),
                         validator: (value) {
                           if (value!.isEmpty) {
