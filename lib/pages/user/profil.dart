@@ -9,14 +9,14 @@ import 'package:material_dialogs/widgets/buttons/icon_outline_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AdminProfil extends StatefulWidget {
-  const AdminProfil({super.key});
+class UserProfil extends StatefulWidget {
+  const UserProfil({super.key});
 
   @override
-  State<AdminProfil> createState() => _AdminProfilState();
+  State<UserProfil> createState() => _UserProfilState();
 }
 
-class _AdminProfilState extends State<AdminProfil> {
+class _UserProfilState extends State<UserProfil> {
   String nama = '';
   String bagian = '';
 
