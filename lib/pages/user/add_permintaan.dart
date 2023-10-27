@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:anterin_kc_pky/models/admin/user_model.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddPermintaanUser extends StatefulWidget {
   const AddPermintaanUser({super.key});
@@ -15,9 +17,12 @@ class AddPermintaanUser extends StatefulWidget {
 }
 
 class _AddPermintaanUserState extends State<AddPermintaanUser> {
-  final GlobalKey<FormState> _driverformKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _tujuanFormKey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _konfirmasiFormKey = GlobalKey<FormState>();
+  List<GlobalKey<FormState>> formKeys = [
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
+  ];
+
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _tujuanController = TextEditingController();
@@ -29,12 +34,14 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
   TimeOfDay selectedTimeBack = TimeOfDay.now();
   List drivers = [];
   var selectedDriver;
+  bool isCompleted = false;
+  bool isDriverVisibility = false;
 
   String selectedHari = 'Senin';
-  String tanggalberangkat = '';
-  String tujuan = '';
-  String kegiatan = '';
-  String driver = '';
+  String username = '';
+  String nama = '';
+  String bagian = '';
+
   var harilist = [
     'Senin',
     'Selasa',
@@ -55,6 +62,21 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    getProfil();
+    super.initState();
+  }
+
+  getProfil() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    setState(() {
+      username = (localStorage.getString('username') ?? '');
+      nama = (localStorage.getString('nama') ?? '');
+      bagian = (localStorage.getString('bagian') ?? '');
+    });
+  }
+
   List<Step> stepList() => [
         Step(
             isActive: currentStep >= 0,
@@ -63,7 +85,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
             content: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Form(
-                key: _driverformKey,
+                key: formKeys[0],
                 child: Column(
                   children: [
                     DropdownButtonFormField(
@@ -94,11 +116,6 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       readOnly: true,
                       onTap: () {
                         _selectDate();
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          tanggalberangkat = value!;
-                        });
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
@@ -148,36 +165,41 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       color: Warna.utama,
                       textColor: Colors.white,
                       onPressed: () {
-                        if (_driverformKey.currentState!.validate()) {
-                          _getDriver(
-                              _dateController.text, _timeController.text);
-                          print(_dateController);
-                          print(_timeController);
-                        }
+                        _getDriver(_dateController.text, _timeController.text);
+                        print(_dateController);
+                        print(_timeController);
                       },
                       child: const Text('Cek'),
                     ),
-                    DropdownButtonFormField(
-                        decoration: const InputDecoration(
-                            labelText: 'Driver',
-                            filled: true,
-                            prefixIcon: Icon(Icons.person),
-                            prefixIconColor: Warna.utama,
-                            enabledBorder:
-                                OutlineInputBorder(borderSide: BorderSide.none),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Warna.utama))),
-                        value: selectedDriver,
-                        items: drivers.map((item) {
-                          return DropdownMenuItem(
-                              value: item['username'].toString(),
-                              child: Text(item['nama'].toString()));
-                        }).toList(),
-                        onChanged: (newValue) {
-                          setState(() {
-                            selectedDriver = newValue!;
-                          });
-                        }),
+                    Visibility(
+                      visible: isDriverVisibility ? true : false,
+                      child: DropdownButtonFormField(
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Driver tidak boleh kosong';
+                            }
+                          },
+                          decoration: const InputDecoration(
+                              labelText: 'Driver',
+                              filled: true,
+                              prefixIcon: Icon(Icons.person),
+                              prefixIconColor: Warna.utama,
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Warna.utama))),
+                          value: selectedDriver,
+                          items: drivers.map((item) {
+                            return DropdownMenuItem(
+                                value: item['username'].toString(),
+                                child: Text(item['nama'].toString()));
+                          }).toList(),
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedDriver = newValue!;
+                            });
+                          }),
+                    ),
                   ],
                 ),
               ),
@@ -189,7 +211,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
             content: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Form(
-                key: _tujuanFormKey,
+                key: formKeys[1],
                 child: Column(
                   children: [
                     TextFormField(
@@ -258,25 +280,6 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Warna.utama))),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    MaterialButton(
-                      color: Warna.utama,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        if (_tujuanFormKey.currentState!.validate()) {
-                          print(_dateController.text);
-                          print(_timeController.text);
-                          print(selectedDriver);
-
-                          print(_tujuanController.text);
-                          print(_kegiatanController.text);
-                          print(_timebackController.text);
-                        }
-                      },
-                      child: const Text('Cek'),
-                    ),
                   ],
                 ),
               ),
@@ -286,9 +289,9 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
             state: StepState.complete,
             title: const Text('Konfirmasi'),
             content: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Form(
-                key: _konfirmasiFormKey,
+                key: formKeys[2],
                 child: Column(
                   children: [
                     TextFormField(
@@ -308,7 +311,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       height: 20,
                     ),
                     TextFormField(
-                      initialValue: tanggalberangkat,
+                      controller: _dateController,
                       readOnly: true,
                       decoration: const InputDecoration(
                           labelText: 'Tanggal Berangkat',
@@ -340,7 +343,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       height: 20,
                     ),
                     TextFormField(
-                      initialValue: _tujuanController.text,
+                      controller: _tujuanController,
                       readOnly: true,
                       decoration: const InputDecoration(
                           labelText: 'Tujuan',
@@ -356,7 +359,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       height: 20,
                     ),
                     TextFormField(
-                      initialValue: _kegiatanController.text,
+                      controller: _kegiatanController,
                       readOnly: true,
                       decoration: const InputDecoration(
                           labelText: 'Kegiatan',
@@ -384,41 +387,6 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Warna.utama))),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      initialValue: selectedDriver,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                          labelText: 'Driver',
-                          filled: true,
-                          prefixIcon: Icon(Icons.person),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    MaterialButton(
-                      color: Warna.utama,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        if (_tujuanFormKey.currentState!.validate()) {
-                          print(_dateController.text);
-                          print(_timeController.text);
-                          print(selectedDriver);
-
-                          print(_tujuanController.text);
-                          print(_kegiatanController.text);
-                          print(_timebackController.text);
-                        }
-                      },
-                      child: const Text('Cek'),
-                    ),
                   ],
                 ),
               ),
@@ -442,7 +410,50 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
           type: StepperType.vertical,
           currentStep: currentStep,
           onStepContinue: () {
-            if (currentStep < (stepList().length - 1)) {
+            final isLastStep = currentStep == stepList().length - 1;
+            if (!formKeys[currentStep].currentState!.validate()) {
+              return;
+            }
+
+            if (isLastStep) {
+              setState(() {
+                isCompleted = true;
+              });
+              AwesomeDialog(
+                context: context,
+                dialogType: DialogType.noHeader,
+                body: Column(
+                  children: [
+                    const Text(
+                      'Konfirmasi Pengajuan Driver',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text('Hari Berangkat : $selectedHari'),
+                    Text('Tanggal Berangkat : ${_dateController.text}'),
+                    Text('Jam Berangkat : ${_timeController.text}'),
+                    Text('Tujuan : ${_tujuanController.text}'),
+                    Text('Kegiatan : ${_kegiatanController.text}'),
+                    Text('Jam Kembali : ${_timebackController.text}'),
+                    Text('Driver : $selectedDriver'),
+                  ],
+                ),
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {
+                  permintaanPost(
+                      selectedHari,
+                      _dateController.text,
+                      _timeController.text,
+                      _tujuanController.text,
+                      _kegiatanController.text,
+                      _timebackController.text,
+                      selectedDriver);
+                },
+              ).show();
+            } else {
               setState(() {
                 currentStep += 1;
               });
@@ -468,9 +479,6 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
         lastDate: DateTime(2100));
     if (picked != null) {
       _dateController.text = picked.toString().split(" ")[0];
-      setState(() {
-        tanggalberangkat = _dateController.text;
-      });
     }
   }
 
@@ -526,6 +534,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
         var data = jsonDecode(response.body);
         setState(() {
           drivers = data;
+          isDriverVisibility = true;
         });
         Fluttertoast.showToast(
             toastLength: Toast.LENGTH_LONG,
@@ -534,5 +543,54 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
     } catch (e) {
       Fluttertoast.showToast(msg: 'Tidak ada driver tersedia');
     }
+  }
+
+  void permintaanPost(
+      String hari,
+      String tanggalBerangkat,
+      String jamBerangkat,
+      String tujuan,
+      String kegiatan,
+      String jamKembali,
+      String usernameDriver) async {
+    try {
+      var response = await http.post(Uri.parse('${apiUrl}permintaan'), body: {
+        "username": username,
+        "nama": nama,
+        "bagian": bagian,
+        "hari": hari,
+        "tanggal_berangkat": tanggalBerangkat,
+        "jam_berangkat": jamBerangkat,
+        "tujuan": tujuan,
+        "kegiatan": kegiatan,
+        "jam_kembali": jamKembali,
+        "username_driver": usernameDriver
+      });
+      if (response.statusCode == 200) {
+        Navigator.pop(context);
+
+        Fluttertoast.showToast(
+            msg: 'Pengajuan driver berhasil',
+            backgroundColor: Colors.green,
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.CENTER);
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+          msg: 'Pengajuan driver gagal',
+          backgroundColor: Colors.red,
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER);
+    }
+    print(username);
+    print(nama);
+    print(bagian);
+    print(hari);
+    print(tanggalBerangkat);
+    print(jamBerangkat);
+    print(tujuan);
+    print(kegiatan);
+    print(jamKembali);
+    print(usernameDriver);
   }
 }

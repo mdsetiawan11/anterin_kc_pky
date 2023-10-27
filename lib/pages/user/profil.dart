@@ -24,7 +24,10 @@ class _UserProfilState extends State<UserProfil> {
 
   logout() async {
     SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('username');
+    localStorage.remove('nama');
     localStorage.remove('role');
+    localStorage.remove('bagian');
 
     // ignore: use_build_context_synchronously
     Navigator.pushReplacement(

@@ -17,6 +17,7 @@ class _AdminPegawaiState extends State<AdminPegawai> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Warna.utama,
             title: const Text('Manajemen Pegawai'),
             titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),

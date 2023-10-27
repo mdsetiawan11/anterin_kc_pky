@@ -55,6 +55,7 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Warna.utama,
         title: const Text('Permintaan Driver'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),

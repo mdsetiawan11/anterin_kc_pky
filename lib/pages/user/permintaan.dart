@@ -68,6 +68,7 @@ class _PermintaanUserState extends State<PermintaanUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Warna.utama,
         title: const Text('Permintaan Driver'),
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
@@ -183,14 +184,14 @@ class _PermintaanUserState extends State<PermintaanUser> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                            ' : ${permintaans[index].tanggalPengajuan}'),
+                                            ' : ${permintaans[index].tanggalPengajuan.toString().substring(0, 10)}'),
                                         Text(
                                             ' : ${permintaans[index].namaPengaju}'),
                                         Text(
                                             ' : ${permintaans[index].bagianPengaju}'),
                                         Text(' : ${permintaans[index].hari}'),
                                         Text(
-                                            ' : ${permintaans[index].tanggalBerangkat}'),
+                                            ' : ${permintaans[index].tanggalBerangkat.toString().substring(0, 10)}'),
                                         Text(
                                             ' : ${permintaans[index].jamBerangkat}'),
                                         Text(
