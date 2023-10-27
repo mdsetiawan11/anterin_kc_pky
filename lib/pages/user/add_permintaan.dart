@@ -1,5 +1,11 @@
+import 'dart:convert';
+
+import 'package:anterin_kc_pky/models/admin/user_model.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
+import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 class AddPermintaanUser extends StatefulWidget {
   const AddPermintaanUser({super.key});
@@ -13,6 +19,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
   final TextEditingController _timeController = TextEditingController();
   int currentStep = 0;
   TimeOfDay selectedTime = TimeOfDay.now();
+  List<UserModel> drivers = [];
   List<Step> stepList() => [
         Step(
             isActive: currentStep >= 0,
@@ -38,7 +45,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Warna.utama))),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextField(
@@ -57,13 +64,17 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                         focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Warna.utama))),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   MaterialButton(
                     color: Warna.utama,
                     textColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      print(_dateController);
+                      print(_timeController);
+                      _getDriver(_dateController.text, _timeController.text);
+                    },
                     child: Text('Cek'),
                   ),
                 ],
@@ -147,6 +158,34 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
     if (picked != null) {
       selectedTime = picked;
       _timeController.text = '${selectedTime.hour}:${selectedTime.minute}';
+    }
+  }
+
+  Future<void> _getDriver(String tanggal, String jam) async {
+    try {
+      final response = await http.post(
+        Uri.parse('${apiUrl}avail'),
+        body: {
+          "tanggal_berangkat": tanggal,
+          "jam_berangkat": jam,
+        },
+      );
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        print(data);
+        for (var singleData in data) {
+          UserModel driver = UserModel(
+              id: singleData['id'],
+              username: singleData['username'],
+              nama: singleData['nama'],
+              bagian: singleData['bagian'],
+              role: singleData['role']);
+          drivers.add(driver);
+          print(drivers.length);
+        }
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'Tidak ada driver tersedia');
     }
   }
 }
