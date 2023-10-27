@@ -15,6 +15,7 @@ class AddPermintaanUser extends StatefulWidget {
 }
 
 class _AddPermintaanUserState extends State<AddPermintaanUser> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _timeController = TextEditingController();
   int currentStep = 0;
@@ -27,57 +28,75 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
             title: const Text('Cek Ketersediaan Driver'),
             content: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _dateController,
-                    readOnly: true,
-                    onTap: () {
-                      _selectDate();
-                    },
-                    decoration: const InputDecoration(
-                        labelText: 'Tanggal Berangkat',
-                        filled: true,
-                        prefixIcon: Icon(Icons.calendar_today),
-                        prefixIconColor: Warna.utama,
-                        enabledBorder:
-                            OutlineInputBorder(borderSide: BorderSide.none),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Warna.utama))),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextField(
-                    controller: _timeController,
-                    readOnly: true,
-                    onTap: () {
-                      _selectTime();
-                    },
-                    decoration: const InputDecoration(
-                        labelText: 'Jam Berangkat',
-                        filled: true,
-                        prefixIcon: Icon(Icons.access_time),
-                        prefixIconColor: Warna.utama,
-                        enabledBorder:
-                            OutlineInputBorder(borderSide: BorderSide.none),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Warna.utama))),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  MaterialButton(
-                    color: Warna.utama,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      print(_dateController);
-                      print(_timeController);
-                      _getDriver(_dateController.text, _timeController.text);
-                    },
-                    child: Text('Cek'),
-                  ),
-                ],
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _dateController,
+                      readOnly: true,
+                      onTap: () {
+                        _selectDate();
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Tanggal Berangkat tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                          labelText: 'Tanggal Berangkat',
+                          filled: true,
+                          prefixIcon: Icon(Icons.calendar_today),
+                          prefixIconColor: Warna.utama,
+                          enabledBorder:
+                              OutlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Warna.utama))),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _timeController,
+                      readOnly: true,
+                      onTap: () {
+                        _selectTime();
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Jam Berangkat tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                          labelText: 'Jam Berangkat',
+                          filled: true,
+                          prefixIcon: Icon(Icons.access_time),
+                          prefixIconColor: Warna.utama,
+                          enabledBorder:
+                              OutlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Warna.utama))),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    MaterialButton(
+                      color: Warna.utama,
+                      textColor: Colors.white,
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _getDriver(
+                              _dateController.text, _timeController.text);
+                          print(_dateController);
+                          print(_timeController);
+                        }
+                      },
+                      child: Text('Cek'),
+                    ),
+                  ],
+                ),
               ),
             )),
         Step(
