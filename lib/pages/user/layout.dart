@@ -1,3 +1,4 @@
+import 'package:anterin_kc_pky/pages/user/dashboard.dart';
 import 'package:anterin_kc_pky/pages/user/permintaan.dart';
 import 'package:anterin_kc_pky/pages/user/profil.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
@@ -63,7 +64,7 @@ class _UserLayoutState extends State<UserLayout> {
 }
 
 List<Widget> _pages = <Widget>[
-  const Text('Dashboard'),
+  const DashboardUser(),
   const PermintaanUser(),
   const UserProfil(),
 ];

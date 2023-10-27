@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:anterin_kc_pky/models/admin/permintaan_model.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
@@ -39,6 +40,8 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
           kegiatan: singleData['kegiatan'],
           usernameDriver: singleData['username_driver'],
           keterangan: singleData['keterangan'],
+          skor: singleData['skor'],
+          komentar: singleData['komentar'],
         );
         permintaans.add(permintaan);
       }
