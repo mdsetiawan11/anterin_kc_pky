@@ -20,7 +20,8 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
   final TextEditingController _timeController = TextEditingController();
   int currentStep = 0;
   TimeOfDay selectedTime = TimeOfDay.now();
-  List<UserModel> drivers = [];
+  List drivers = [];
+  var selectedDriver;
   List<Step> stepList() => [
         Step(
             isActive: currentStep >= 0,
@@ -93,8 +94,21 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                           print(_timeController);
                         }
                       },
-                      child: Text('Cek'),
+                      child: const Text('Cek'),
                     ),
+                    DropdownButtonFormField(
+                        decoration: const InputDecoration(labelText: 'Driver'),
+                        value: selectedDriver,
+                        items: drivers.map((item) {
+                          return DropdownMenuItem(
+                              value: item['username'].toString(),
+                              child: Text(item['nama'].toString()));
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedDriver = newValue!;
+                          });
+                        }),
                   ],
                 ),
               ),
@@ -191,17 +205,12 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
       );
       if (response.statusCode == 200) {
         var data = jsonDecode(response.body);
-        print(data);
-        for (var singleData in data) {
-          UserModel driver = UserModel(
-              id: singleData['id'],
-              username: singleData['username'],
-              nama: singleData['nama'],
-              bagian: singleData['bagian'],
-              role: singleData['role']);
-          drivers.add(driver);
-          print(drivers.length);
-        }
+        setState(() {
+          drivers = data;
+        });
+        Fluttertoast.showToast(
+            toastLength: Toast.LENGTH_LONG,
+            msg: '${drivers.length} Driver Tersedia');
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Tidak ada driver tersedia');
