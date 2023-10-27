@@ -51,7 +51,6 @@ class _PermintaanUserState extends State<PermintaanUser> {
           tujuan: singleData['tujuan'],
           kegiatan: singleData['kegiatan'],
           usernameDriver: singleData['username_driver'],
-          namaDriver: singleData['nama_driver'],
           keterangan: singleData['keterangan'],
         );
         permintaans.add(permintaan);
@@ -200,7 +199,7 @@ class _PermintaanUserState extends State<PermintaanUser> {
                                         Text(
                                             ' : ${permintaans[index].kegiatan}'),
                                         Text(
-                                            ' : ${permintaans[index].namaDriver}'),
+                                            ' : ${permintaans[index].usernameDriver}'),
                                       ],
                                     )
                                   ],

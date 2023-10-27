@@ -38,7 +38,6 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
           tujuan: singleData['tujuan'],
           kegiatan: singleData['kegiatan'],
           usernameDriver: singleData['username_driver'],
-          namaDriver: singleData['nama_driver'],
           keterangan: singleData['keterangan'],
         );
         permintaans.add(permintaan);
@@ -204,7 +203,7 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                                           Text(
                                               ' : ${permintaans[index].kegiatan}'),
                                           Text(
-                                              ' : ${permintaans[index].namaDriver}'),
+                                              ' : ${permintaans[index].usernameDriver}'),
                                         ],
                                       )
                                     ],
