@@ -21,6 +21,7 @@ class PermintaanUser extends StatefulWidget {
 class _PermintaanUserState extends State<PermintaanUser> {
   String username = '';
   double initialRating = 0.0;
+  bool isRatingVisibility = false;
   @override
   void initState() {
     getData();
@@ -65,6 +66,12 @@ class _PermintaanUserState extends State<PermintaanUser> {
   }
 
   Future refresh() async {
+    setState(() {
+      permintaans = [];
+    });
+  }
+
+  callback() {
     setState(() {
       permintaans = [];
     });
@@ -125,7 +132,7 @@ class _PermintaanUserState extends State<PermintaanUser> {
                           child: InkWell(
                             onTap: () {
                               if (permintaans[index].keterangan ==
-                                  "disetujui") {
+                                  "sudah kembali") {
                                 AwesomeDialog(
                                     context: context,
                                     dialogType: DialogType.noHeader,
@@ -148,7 +155,7 @@ class _PermintaanUserState extends State<PermintaanUser> {
                                             initialRating: 0,
                                             minRating: 1,
                                             direction: Axis.horizontal,
-                                            allowHalfRating: true,
+                                            allowHalfRating: false,
                                             itemCount: 5,
                                             itemPadding:
                                                 const EdgeInsets.symmetric(
@@ -195,14 +202,14 @@ class _PermintaanUserState extends State<PermintaanUser> {
                                                   Uri.parse(apiUrl + 'review'),
                                                   body: {
                                                     "id": permintaans[index].id,
-                                                    "skor": double.parse(
-                                                        initialRating
-                                                            .toString()),
+                                                    "skor": initialRating
+                                                        .toString(),
                                                     "komentar": _comment.text
                                                   });
                                               if (response.statusCode == 200) {
                                                 initialRating = 0.0;
                                                 _comment.clear();
+                                                callback();
                                                 Navigator.pop(context);
                                                 Fluttertoast.showToast(
                                                     msg:
@@ -270,21 +277,43 @@ class _PermintaanUserState extends State<PermintaanUser> {
                                                     ),
                                                   ),
                                                 )
-                                              : Card(
-                                                  elevation: 0,
-                                                  color: Colors.green,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Text(
-                                                      permintaans[index]
-                                                          .keterangan,
-                                                      style: const TextStyle(
-                                                          color: Colors.white),
+                                              : (permintaans[index]
+                                                          .keterangan ==
+                                                      "sudah kembali")
+                                                  ? Card(
+                                                      color: Warna.utama,
+                                                      elevation: 0,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Text(
+                                                          permintaans[index]
+                                                              .keterangan,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Card(
+                                                      elevation: 0,
+                                                      color: Colors.green,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Text(
+                                                          permintaans[index]
+                                                              .keterangan,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
                                     ],
                                   ),
                                   Row(
@@ -331,6 +360,70 @@ class _PermintaanUserState extends State<PermintaanUser> {
                                         ],
                                       ),
                                     ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Visibility(
+                                    visible: (permintaans[index].keterangan ==
+                                            "sudah kembali")
+                                        ? true
+                                        : false,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          const Row(
+                                            children: [
+                                              Text(
+                                                'Penilaian',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          TextFormField(
+                                            initialValue:
+                                                permintaans[index].komentar,
+                                            readOnly: true,
+                                            decoration: InputDecoration(
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color:
+                                                                Warna.utama))),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          RatingBar.builder(
+                                            initialRating: double.parse(
+                                                permintaans[index].skor),
+                                            direction: Axis.horizontal,
+                                            allowHalfRating: false,
+                                            ignoreGestures: true,
+                                            itemCount: 5,
+                                            itemPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 4.0),
+                                            itemBuilder: (context, _) =>
+                                                const Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            ),
+                                            onRatingUpdate: (rating) {},
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),

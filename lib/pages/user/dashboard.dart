@@ -20,7 +20,7 @@ class _DashboardUserState extends State<DashboardUser> {
         ),
         backgroundColor: Warna.utama,
       ),
-      body: Center(
+      body: const Center(
         child: Text('Dashboard'),
       ),
     );

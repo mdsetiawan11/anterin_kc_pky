@@ -16,8 +16,8 @@ class PermintaanModel {
   String kegiatan;
   String usernameDriver;
   String keterangan;
-  double? skor;
-  String? komentar;
+  String skor;
+  String komentar;
 
   PermintaanModel(
       {required this.id,

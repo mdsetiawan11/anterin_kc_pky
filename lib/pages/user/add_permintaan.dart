@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:anterin_kc_pky/models/admin/user_model.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -166,8 +165,6 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       textColor: Colors.white,
                       onPressed: () {
                         _getDriver(_dateController.text, _timeController.text);
-                        print(_dateController);
-                        print(_timeController);
                       },
                       child: const Text('Cek'),
                     ),
@@ -539,6 +536,8 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
         Fluttertoast.showToast(
             toastLength: Toast.LENGTH_LONG,
             msg: '${drivers.length} Driver Tersedia');
+      } else {
+        Fluttertoast.showToast(msg: 'Tidak ada driver tersedia');
       }
     } catch (e) {
       Fluttertoast.showToast(msg: 'Tidak ada driver tersedia');
