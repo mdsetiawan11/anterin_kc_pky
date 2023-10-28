@@ -1,4 +1,3 @@
-import 'package:anterin_kc_pky/pages/admin/dashboard.dart';
 import 'package:anterin_kc_pky/pages/admin/pegawai.dart';
 import 'package:anterin_kc_pky/pages/admin/permintaan.dart';
 import 'package:anterin_kc_pky/pages/admin/profil.dart';
