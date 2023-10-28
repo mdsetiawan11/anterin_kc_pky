@@ -5,6 +5,7 @@ import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -149,21 +150,43 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                                                     ),
                                                   ),
                                                 )
-                                              : Card(
-                                                  elevation: 0,
-                                                  color: Colors.green,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Text(
-                                                      permintaans[index]
-                                                          .keterangan,
-                                                      style: const TextStyle(
-                                                          color: Colors.white),
+                                              : (permintaans[index]
+                                                          .keterangan ==
+                                                      "sudah kembali")
+                                                  ? Card(
+                                                      color: Warna.utama,
+                                                      elevation: 0,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Text(
+                                                          permintaans[index]
+                                                              .keterangan,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  : Card(
+                                                      elevation: 0,
+                                                      color: Colors.green,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Text(
+                                                          permintaans[index]
+                                                              .keterangan,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
                                     ],
                                   ),
                                   Row(
@@ -189,14 +212,14 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                              ' : ${permintaans[index].tanggalPengajuan}'),
+                                              ' : ${permintaans[index].tanggalPengajuan.toString().substring(0, 10)}'),
                                           Text(
                                               ' : ${permintaans[index].namaPengaju}'),
                                           Text(
                                               ' : ${permintaans[index].bagianPengaju}'),
                                           Text(' : ${permintaans[index].hari}'),
                                           Text(
-                                              ' : ${permintaans[index].tanggalBerangkat}'),
+                                              ' : ${permintaans[index].tanggalBerangkat.toString().substring(0, 10)}'),
                                           Text(
                                               ' : ${permintaans[index].jamBerangkat}'),
                                           Text(
@@ -210,6 +233,70 @@ class _AdminPermintaanState extends State<AdminPermintaan> {
                                         ],
                                       )
                                     ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Visibility(
+                                    visible: (permintaans[index].keterangan ==
+                                            "sudah kembali")
+                                        ? true
+                                        : false,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        children: [
+                                          const Row(
+                                            children: [
+                                              Text(
+                                                'Penilaian',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          TextFormField(
+                                            initialValue:
+                                                permintaans[index].komentar,
+                                            readOnly: true,
+                                            decoration: InputDecoration(
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color:
+                                                                Warna.utama))),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          RatingBar.builder(
+                                            initialRating: double.parse(
+                                                permintaans[index].skor),
+                                            direction: Axis.horizontal,
+                                            allowHalfRating: false,
+                                            ignoreGestures: true,
+                                            itemCount: 5,
+                                            itemPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 4.0),
+                                            itemBuilder: (context, _) =>
+                                                const Icon(
+                                              Icons.star,
+                                              color: Colors.amber,
+                                            ),
+                                            onRatingUpdate: (rating) {},
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),

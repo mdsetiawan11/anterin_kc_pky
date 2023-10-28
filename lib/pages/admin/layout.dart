@@ -47,10 +47,10 @@ class _AdminLayoutState extends State<AdminLayout> {
         activeColor: Colors.white,
         selectedIndex: selectedIndex,
         barItems: <BarItem>[
-          BarItem(
-            icon: Icons.dashboard_rounded,
-            title: 'Dashboard',
-          ),
+          //  BarItem(
+          //    icon: Icons.dashboard_rounded,
+          //    title: 'Dashboard',
+          //  ),
           BarItem(
             icon: Icons.checklist_rounded,
             title: 'Permintaan',
@@ -70,7 +70,7 @@ class _AdminLayoutState extends State<AdminLayout> {
 }
 
 List<Widget> _pages = <Widget>[
-  const AdminDashboard(),
+  // const AdminDashboard(),
   const AdminPermintaan(),
   const AdminPegawai(),
   const AdminProfil()

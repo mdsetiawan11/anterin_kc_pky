@@ -45,10 +45,10 @@ class _UserLayoutState extends State<UserLayout> {
         activeColor: Colors.white,
         selectedIndex: selectedIndex,
         barItems: <BarItem>[
-          BarItem(
-            icon: Icons.dashboard_rounded,
-            title: 'Dashboard',
-          ),
+          //  BarItem(
+          //   icon: Icons.dashboard_rounded,
+          //   title: 'Dashboard',
+          //  ),
           BarItem(
             icon: Icons.checklist_rounded,
             title: 'Permintaan',
@@ -64,7 +64,7 @@ class _UserLayoutState extends State<UserLayout> {
 }
 
 List<Widget> _pages = <Widget>[
-  const DashboardUser(),
+  // const DashboardUser(),
   const PermintaanUser(),
   const UserProfil(),
 ];

@@ -175,6 +175,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                             if (value == null) {
                               return 'Driver tidak boleh kosong';
                             }
+                            return null;
                           },
                           decoration: const InputDecoration(
                               labelText: 'Driver',
