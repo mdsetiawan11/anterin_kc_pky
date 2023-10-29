@@ -27,7 +27,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
             decoration: pageDecoration,
             image: SvgPicture.asset(
               'assets/navigation.svg',
-              width: 350,
+              width: 200,
             )),
         PageViewModel(
             title: 'Driver',
@@ -35,7 +35,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
             decoration: pageDecoration,
             image: SvgPicture.asset(
               'assets/select.svg',
-              width: 350,
+              width: 200,
             )),
         PageViewModel(
             title: 'Mobile',
@@ -43,7 +43,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
             decoration: pageDecoration,
             image: SvgPicture.asset(
               'assets/mobile.svg',
-              width: 350,
+              width: 200,
             ))
       ],
       onDone: () {
