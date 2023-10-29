@@ -31,11 +31,10 @@ class _IntroductionPageState extends State<IntroductionPage> {
             )),
         PageViewModel(
             title: 'Driver',
-            body:
-                'Tentukan tanggal dan jam mau dianterin serta cek ketersediaan driver.',
+            body: 'Tentukan tanggal dan jam serta cek ketersediaan driver.',
             decoration: pageDecoration,
             image: SvgPicture.asset(
-              'assets/navigation.svg',
+              'assets/select.svg',
               width: 350,
             )),
         PageViewModel(
