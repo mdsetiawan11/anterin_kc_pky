@@ -39,11 +39,11 @@ class _IntroductionPageState extends State<IntroductionPage> {
             )),
         PageViewModel(
             title: 'Mobile',
-            body: 'Nikmati kemudahan fitur dalam genggaman anda.',
+            body: 'Nikmati kemudahan fitur dalam genggaman.',
             decoration: pageDecoration,
             image: SvgPicture.asset(
               'assets/mobile.svg',
-              width: 200,
+              width: 350,
             ))
       ],
       onDone: () {
