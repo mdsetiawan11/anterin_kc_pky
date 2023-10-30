@@ -52,6 +52,7 @@ class _PermintaanUserState extends State<PermintaanUser> {
           hari: singleData['hari'],
           tanggalBerangkat: DateTime.parse(singleData['tanggal_berangkat']),
           jamBerangkat: singleData['jam_berangkat'],
+          tanggalKembali: DateTime.parse(singleData['tanggal_kembali']),
           jamKembali: singleData['jam_kembali'],
           tujuan: singleData['tujuan'],
           kegiatan: singleData['kegiatan'],
@@ -328,6 +329,7 @@ class _PermintaanUserState extends State<PermintaanUser> {
                                           Text('Hari'),
                                           Text('Tanggal Berangkat'),
                                           Text('Jam Berangkat'),
+                                          Text('Tanggal Kembali'),
                                           Text('Jam Kembali'),
                                           Text('Tujuan'),
                                           Text('Kegiatan'),
@@ -349,6 +351,8 @@ class _PermintaanUserState extends State<PermintaanUser> {
                                               ' : ${permintaans[index].tanggalBerangkat.toString().substring(0, 10)}'),
                                           Text(
                                               ' : ${permintaans[index].jamBerangkat}'),
+                                          Text(
+                                              ' : ${permintaans[index].tanggalKembali.toString().substring(0, 10)}'),
                                           Text(
                                               ' : ${permintaans[index].jamKembali}'),
                                           Text(

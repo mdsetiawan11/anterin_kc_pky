@@ -11,6 +11,7 @@ class PermintaanModel {
   String hari;
   DateTime tanggalBerangkat;
   String jamBerangkat;
+  DateTime tanggalKembali;
   String jamKembali;
   String tujuan;
   String kegiatan;
@@ -28,6 +29,7 @@ class PermintaanModel {
       required this.hari,
       required this.tanggalBerangkat,
       required this.jamBerangkat,
+      required this.tanggalKembali,
       required this.jamKembali,
       required this.tujuan,
       required this.kegiatan,

@@ -27,6 +27,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
   final TextEditingController _timeController = TextEditingController();
   final TextEditingController _tujuanController = TextEditingController();
   final TextEditingController _kegiatanController = TextEditingController();
+  final TextEditingController _datebackController = TextEditingController();
   final TextEditingController _timebackController = TextEditingController();
 
   int currentStep = 0;
@@ -57,6 +58,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
     _timeController.dispose();
     _tujuanController.dispose();
     _kegiatanController.dispose();
+    _datebackController.dispose();
     _timebackController.dispose();
 
     super.dispose();
@@ -260,6 +262,31 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       height: 20,
                     ),
                     TextFormField(
+                      controller: _datebackController,
+                      readOnly: true,
+                      onTap: () {
+                        _selectDateBack();
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Tanggal kembali tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                          labelText: 'Tanggal Kembali',
+                          filled: true,
+                          prefixIcon: Icon(Icons.calendar_today),
+                          prefixIconColor: Warna.utama,
+                          enabledBorder:
+                              OutlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Warna.utama))),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
                       controller: _timebackController,
                       readOnly: true,
                       onTap: () {
@@ -426,6 +453,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                     Text('Jam Berangkat : ${_timeController.text}'),
                     Text('Tujuan : ${_tujuanController.text}'),
                     Text('Kegiatan : ${_kegiatanController.text}'),
+                    Text('Tanggal Kembali : ${_datebackController.text}'),
                     Text('Jam Kembali : ${_timebackController.text}'),
                     Text('Driver : $selectedDriver'),
                   ],
@@ -438,6 +466,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       _timeController.text,
                       _tujuanController.text,
                       _kegiatanController.text,
+                      _datebackController.text,
                       _timebackController.text,
                       selectedDriver);
                 },
@@ -487,6 +516,17 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
     if (picked != null) {
       selectedTime = picked;
       _timeController.text = '${selectedTime.hour}:${selectedTime.minute}';
+    }
+  }
+
+  Future<void> _selectDateBack() async {
+    DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100));
+    if (picked != null) {
+      _datebackController.text = picked.toString().split(" ")[0];
     }
   }
 
@@ -542,6 +582,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
       String jamBerangkat,
       String tujuan,
       String kegiatan,
+      String tanggalKembali,
       String jamKembali,
       String usernameDriver) async {
     try {
@@ -554,6 +595,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
         "jam_berangkat": jamBerangkat,
         "tujuan": tujuan,
         "kegiatan": kegiatan,
+        "tanggal_kembali": tanggalKembali,
         "jam_kembali": jamKembali,
         "username_driver": usernameDriver
       });
