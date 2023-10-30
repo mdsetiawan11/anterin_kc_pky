@@ -42,6 +42,6 @@ class MyApp extends StatelessWidget {
                     ? const UserLayout()
                     : role == "admin"
                         ? const AdminLayout()
-                        : const AdminLayout());
+                        : const IntroductionPage());
   }
 }

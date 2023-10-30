@@ -17,53 +17,56 @@ class _IntroductionPageState extends State<IntroductionPage> {
         titleTextStyle: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
         bodyTextStyle: TextStyle(fontSize: 18),
         bodyPadding: EdgeInsets.all(16));
-    return IntroductionScreen(
-      globalBackgroundColor: Colors.white,
-      dotsFlex: 3,
-      pages: [
-        PageViewModel(
-            title: 'Anterin',
-            body: 'Mau dianterin kemana hari ini?',
-            decoration: pageDecoration,
-            image: SvgPicture.asset(
-              'assets/navigation.svg',
-              width: 200,
-            )),
-        PageViewModel(
-            title: 'Driver',
-            body: 'Tentukan tanggal dan jam serta cek ketersediaan driver.',
-            decoration: pageDecoration,
-            image: SvgPicture.asset(
-              'assets/select.svg',
-              width: 200,
-            )),
-        PageViewModel(
-            title: 'Mobile',
-            body: 'Nikmati kemudahan fitur dalam genggaman.',
-            decoration: pageDecoration,
-            image: SvgPicture.asset(
-              'assets/mobile.svg',
-              width: 200,
-            ))
-      ],
-      onDone: () {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => const LoginPage()));
-      },
-      showSkipButton: true,
-      showDoneButton: true,
-      showNextButton: true,
-      showBackButton: false,
-      back: const Icon(Icons.arrow_back),
-      skip: const Text('Skip'),
-      next: const Icon(Icons.arrow_forward),
-      done: const Text('Login'),
-      dotsDecorator: const DotsDecorator(
-          color: Colors.grey,
-          size: Size(10, 10),
-          activeSize: Size(22, 10),
-          activeShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(25)))),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: IntroductionScreen(
+        globalBackgroundColor: Colors.white,
+        dotsFlex: 3,
+        pages: [
+          PageViewModel(
+              title: 'Anterin',
+              body: 'Mau dianterin kemana hari ini?',
+              decoration: pageDecoration,
+              image: SvgPicture.asset(
+                'assets/navigation.svg',
+                width: 200,
+              )),
+          PageViewModel(
+              title: 'Driver',
+              body: 'Tentukan tanggal dan jam serta cek ketersediaan driver.',
+              decoration: pageDecoration,
+              image: SvgPicture.asset(
+                'assets/select.svg',
+                width: 200,
+              )),
+          PageViewModel(
+              title: 'Mobile',
+              body: 'Nikmati kemudahan fitur dalam genggaman.',
+              decoration: pageDecoration,
+              image: SvgPicture.asset(
+                'assets/mobile.svg',
+                width: 200,
+              ))
+        ],
+        onDone: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const LoginPage()));
+        },
+        showSkipButton: true,
+        showDoneButton: true,
+        showNextButton: true,
+        showBackButton: false,
+        back: const Icon(Icons.arrow_back),
+        skip: const Text('Skip'),
+        next: const Icon(Icons.arrow_forward),
+        done: const Text('Login'),
+        dotsDecorator: const DotsDecorator(
+            color: Colors.grey,
+            size: Size(10, 10),
+            activeSize: Size(22, 10),
+            activeShape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(25)))),
+      ),
     );
   }
 }

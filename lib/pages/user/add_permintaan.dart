@@ -20,6 +20,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
     GlobalKey<FormState>(),
+    GlobalKey<FormState>(),
   ];
 
   final TextEditingController _dateController = TextEditingController();
@@ -80,7 +81,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
         Step(
             isActive: currentStep >= 0,
             state: currentStep <= 0 ? StepState.editing : StepState.complete,
-            title: const Text('Cek Ketersediaan Driver'),
+            title: const Text('Tanggal dan Jam Berangkat'),
             content: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Form(
@@ -143,7 +144,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Jam Berangkat tidak boleh kosong';
+                          return 'Jam berangkat tidak boleh kosong';
                         }
                         return null;
                       },
@@ -160,44 +161,6 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                     const SizedBox(
                       height: 20,
                     ),
-                    MaterialButton(
-                      color: Warna.utama,
-                      textColor: Colors.white,
-                      onPressed: () {
-                        _getDriver(_dateController.text, _timeController.text);
-                      },
-                      child: const Text('Cek'),
-                    ),
-                    Visibility(
-                      visible: isDriverVisibility ? true : false,
-                      child: DropdownButtonFormField(
-                          validator: (value) {
-                            if (value == null) {
-                              return 'Driver tidak boleh kosong';
-                            }
-                            return null;
-                          },
-                          decoration: const InputDecoration(
-                              labelText: 'Driver',
-                              filled: true,
-                              prefixIcon: Icon(Icons.person),
-                              prefixIconColor: Warna.utama,
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide.none),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Warna.utama))),
-                          value: selectedDriver,
-                          items: drivers.map((item) {
-                            return DropdownMenuItem(
-                                value: item['username'].toString(),
-                                child: Text(item['nama'].toString()));
-                          }).toList(),
-                          onChanged: (newValue) {
-                            setState(() {
-                              selectedDriver = newValue!;
-                            });
-                          }),
-                    ),
                   ],
                 ),
               ),
@@ -205,11 +168,51 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
         Step(
             isActive: currentStep >= 1,
             state: currentStep <= 1 ? StepState.editing : StepState.complete,
+            title: Text('Driver'),
+            content: Padding(
+              padding: EdgeInsets.all(8),
+              child: Form(
+                key: formKeys[1],
+                child: Visibility(
+                  visible: isDriverVisibility ? true : false,
+                  child: DropdownButtonFormField(
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Driver tidak boleh kosong';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                          labelText: 'Driver',
+                          filled: true,
+                          prefixIcon: Icon(Icons.person),
+                          prefixIconColor: Warna.utama,
+                          enabledBorder:
+                              OutlineInputBorder(borderSide: BorderSide.none),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Warna.utama))),
+                      value: selectedDriver,
+                      items: drivers.map((item) {
+                        return DropdownMenuItem(
+                            value: item['username'].toString(),
+                            child: Text(item['nama'].toString()));
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedDriver = newValue!;
+                        });
+                      }),
+                ),
+              ),
+            )),
+        Step(
+            isActive: currentStep >= 2,
+            state: currentStep <= 2 ? StepState.editing : StepState.complete,
             title: const Text('Tujuan dan Kegiatan'),
             content: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Form(
-                key: formKeys[1],
+                key: formKeys[2],
                 child: Column(
                   children: [
                     TextFormField(
@@ -264,7 +267,7 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                       },
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Jam Berangkat tidak boleh kosong';
+                          return 'Jam kembali tidak boleh kosong';
                         }
                         return null;
                       },
@@ -283,13 +286,13 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
               ),
             )),
         Step(
-            isActive: currentStep >= 2,
+            isActive: currentStep >= 3,
             state: StepState.complete,
             title: const Text('Konfirmasi'),
             content: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Form(
-                key: formKeys[2],
+                key: formKeys[3],
                 child: Column(
                   children: [
                     TextFormField(
@@ -409,8 +412,12 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
           currentStep: currentStep,
           onStepContinue: () {
             final isLastStep = currentStep == stepList().length - 1;
+            final isFirstStep = currentStep == stepList().length - 4;
             if (!formKeys[currentStep].currentState!.validate()) {
               return;
+            }
+            if (isFirstStep) {
+              _getDriver(_dateController.text, _timeController.text);
             }
 
             if (isLastStep) {
