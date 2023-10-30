@@ -296,22 +296,6 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                 child: Column(
                   children: [
                     TextFormField(
-                      initialValue: selectedHari,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                          labelText: 'Hari Berangkat',
-                          filled: true,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
                       controller: _dateController,
                       readOnly: true,
                       decoration: const InputDecoration(
