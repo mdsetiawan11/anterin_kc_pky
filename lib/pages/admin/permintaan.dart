@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:anterin_kc_pky/models/admin/permintaan_model.dart';
+import 'package:anterin_kc_pky/services/admin.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
-import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -19,34 +17,10 @@ class AdminPermintaan extends StatefulWidget {
 
 class _AdminPermintaanState extends State<AdminPermintaan> {
   List<PermintaanModel> permintaans = [];
+  AdminService _adminService = AdminService();
 
-  Future getPermintaan() async {
-    final response = await http.get(Uri.parse('${apiUrl}rekap'));
-
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      for (var singleData in data) {
-        PermintaanModel permintaan = PermintaanModel(
-          id: singleData['id'],
-          tanggalPengajuan: DateTime.parse(singleData['tanggal_pengajuan']),
-          usernamePengaju: singleData['username_pengaju'],
-          namaPengaju: singleData['nama_pengaju'],
-          bagianPengaju: singleData['bagian_pengaju'],
-          hari: singleData['hari'],
-          tanggalBerangkat: DateTime.parse(singleData['tanggal_berangkat']),
-          jamBerangkat: singleData['jam_berangkat'],
-          tanggalKembali: DateTime.parse(singleData['tanggal_kembali']),
-          jamKembali: singleData['jam_kembali'],
-          tujuan: singleData['tujuan'],
-          kegiatan: singleData['kegiatan'],
-          usernameDriver: singleData['username_driver'],
-          keterangan: singleData['keterangan'],
-          skor: singleData['skor'],
-          komentar: singleData['komentar'],
-        );
-        permintaans.add(permintaan);
-      }
-    }
+  getPermintaan() async {
+    permintaans = await _adminService.getPermintaan();
   }
 
   Future refresh() async {

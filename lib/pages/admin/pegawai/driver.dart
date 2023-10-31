@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:anterin_kc_pky/models/admin/user_model.dart';
+import 'package:anterin_kc_pky/services/admin.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:flutter/material.dart';
@@ -19,21 +20,10 @@ class DriverBPJS extends StatefulWidget {
 class _DriverBPJSState extends State<DriverBPJS> {
   List<UserModel> driver = [];
 
-  Future getDriver() async {
-    final response = await http.get(Uri.parse('${apiUrl}alldriver'));
+  AdminService _adminService = AdminService();
 
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      for (var singleData in data) {
-        UserModel peg = UserModel(
-            id: singleData['id'],
-            username: singleData['username'],
-            nama: singleData['nama'],
-            bagian: singleData['bagian'],
-            role: singleData['role']);
-        driver.add(peg);
-      }
-    }
+  getDriver() async {
+    driver = await _adminService.getDriver();
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

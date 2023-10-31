@@ -1,8 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, duplicate_ignore
 
-import 'dart:convert';
-
 import 'package:anterin_kc_pky/models/admin/user_model.dart';
+import 'package:anterin_kc_pky/services/admin.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:flutter/material.dart';
@@ -29,21 +28,10 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
     'PKP',
   ];
 
-  Future getPegawai() async {
-    final response = await http.get(Uri.parse('${apiUrl}allpegawai'));
+  AdminService _adminService = AdminService();
 
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.body);
-      for (var singleData in data) {
-        UserModel peg = UserModel(
-            id: singleData['id'],
-            username: singleData['username'],
-            nama: singleData['nama'],
-            bagian: singleData['bagian'],
-            role: singleData['role']);
-        pegawai.add(peg);
-      }
-    }
+  getPegawai() async {
+    pegawai = await _adminService.getPegawai();
   }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

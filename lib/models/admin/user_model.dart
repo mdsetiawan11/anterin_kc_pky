@@ -11,4 +11,13 @@ class UserModel {
       required this.nama,
       required this.bagian,
       required this.role});
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+        id: json['id'],
+        username: json['username'],
+        nama: json['nama'],
+        bagian: json['bagian'],
+        role: json['role']);
+  }
 }
