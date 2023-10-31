@@ -122,37 +122,24 @@ class _PegawaiBPJSState extends State<PegawaiBPJS> {
                   textColor: Colors.white,
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      try {
-                        var response = await http
-                            .post(Uri.parse('${apiUrl}tambahpegawai'), body: {
-                          "username": _username.text.trim(),
-                          "nama": _nama.text.trim(),
-                          "bagian": selectedBagian,
-                          "password": _password.text.trim()
-                        });
-                        if (response.statusCode == 200) {
-                          Fluttertoast.showToast(
-                              msg: 'Tambah Data Berhasil',
-                              toastLength: Toast.LENGTH_LONG,
-                              gravity: ToastGravity.CENTER,
-                              backgroundColor: Warna.utama,
-                              textColor: Colors.white);
-                        }
-                      } catch (e) {
+                      bool response = await _adminService.addPegawai(
+                          _username.text,
+                          _nama.text,
+                          selectedBagian,
+                          _password.text);
+                      if (response) {
                         Fluttertoast.showToast(
-                            msg: 'Tambah Data Gagal',
-                            toastLength: Toast.LENGTH_LONG,
-                            gravity: ToastGravity.CENTER,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white);
+                          msg: 'Tambah data berhasil',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                        );
+                        _username.clear();
+                        _nama.clear();
+                        _password.clear();
+                        callback();
+                        Navigator.pop(context);
                       }
-                      _username.clear();
-                      _nama.clear();
-                      _password.clear();
                     }
-
-                    callback();
-                    Navigator.pop(context);
                   },
                   child: const Text('Simpan'),
                 )
