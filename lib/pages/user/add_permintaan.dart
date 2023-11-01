@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
+import 'package:anterin_kc_pky/shared/widgets/textformfield.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -113,12 +114,21 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                     const SizedBox(
                       height: 20,
                     ),
+                    textFormField(
+                        isreadOnly: true,
+                        onTap: () {
+                          _selectDate();
+                        },
+                        TextController: _dateController,
+                        labelText: 'Tanggal Berangkat',
+                        validatorText: 'Tanggal Berangkat tidak boleh kosong',
+                        iconData: Icons.calendar_today),
                     TextFormField(
                       controller: _dateController,
-                      readOnly: true,
                       onTap: () {
                         _selectDate();
                       },
+                      readOnly: true,
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Tanggal Berangkat tidak boleh kosong';
