@@ -8,6 +8,7 @@ import 'package:anterin_kc_pky/pages/user/layout.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -109,6 +110,9 @@ class _LoginPageState extends State<LoginPage> {
               SingleChildScrollView(
                 child: Center(
                   child: Column(
+                      children: AnimateList(
+                    interval: 200.ms,
+                    effects: [SlideEffect(duration: 150.ms)],
                     children: [
                       const SizedBox(
                         height: 50,
@@ -232,7 +236,7 @@ class _LoginPageState extends State<LoginPage> {
                       // child: const Text('Lupa Password ?'),
                       //)
                     ],
-                  ),
+                  )),
                 ),
               ),
             ],
