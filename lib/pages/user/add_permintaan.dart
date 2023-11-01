@@ -116,63 +116,21 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                     ),
                     textFormField(
                         isreadOnly: true,
-                        onTap: () {
-                          _selectDate();
-                        },
+                        onTap: _selectDate,
                         TextController: _dateController,
                         labelText: 'Tanggal Berangkat',
                         validatorText: 'Tanggal Berangkat tidak boleh kosong',
                         iconData: Icons.calendar_today),
-                    TextFormField(
-                      controller: _dateController,
-                      onTap: () {
-                        _selectDate();
-                      },
-                      readOnly: true,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Tanggal Berangkat tidak boleh kosong';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Tanggal Berangkat',
-                          filled: true,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _timeController,
-                      readOnly: true,
-                      onTap: () {
-                        _selectTime();
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Jam berangkat tidak boleh kosong';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Jam Berangkat',
-                          filled: true,
-                          prefixIcon: Icon(Icons.access_time),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    textFormField(
+                        isreadOnly: true,
+                        TextController: _timeController,
+                        labelText: 'Jam Berangkat',
+                        validatorText: 'Jam berangkat tidak boleh kosong',
+                        iconData: Icons.access_time,
+                        onTap: _selectTime),
                   ],
                 ),
               ),
@@ -227,97 +185,43 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                 key: formKeys[2],
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: _tujuanController,
-                      readOnly: false,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Tujuan tidak boleh kosong';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Tujuan',
-                          filled: true,
-                          prefixIcon: Icon(Icons.pin_drop),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: false,
+                        TextController: _tujuanController,
+                        labelText: 'Tujuan',
+                        validatorText: 'Tujuan tidak boleh kosong',
+                        iconData: Icons.pin_drop,
+                        onTap: () {}),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _kegiatanController,
-                      readOnly: false,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Kegiatan tidak boleh kosong';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Kegiatan',
-                          filled: true,
-                          prefixIcon: Icon(Icons.directions_walk),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: false,
+                        TextController: _kegiatanController,
+                        labelText: 'Kegiatan',
+                        validatorText: 'Kegiatan tidak boleh kosong',
+                        iconData: Icons.directions_walk,
+                        onTap: () {}),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _datebackController,
-                      readOnly: true,
-                      onTap: () {
-                        _selectDateBack();
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Tanggal kembali tidak boleh kosong';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Tanggal Kembali',
-                          filled: true,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: true,
+                        TextController: _datebackController,
+                        labelText: 'Tanggal Kembali',
+                        validatorText: 'Tanggal kembali tidak boleh kosong',
+                        iconData: Icons.calendar_today,
+                        onTap: _selectDateBack),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _timebackController,
-                      readOnly: true,
-                      onTap: () {
-                        _selectbackTime();
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Jam kembali tidak boleh kosong';
-                        }
-                        return null;
-                      },
-                      decoration: const InputDecoration(
-                          labelText: 'Jam Kembali (Perkiraan)',
-                          filled: true,
-                          prefixIcon: Icon(Icons.access_time),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: true,
+                        TextController: _timebackController,
+                        labelText: 'Jam Kembali (Perkiraan)',
+                        validatorText: 'Jam kembali tidak boleh kosong',
+                        iconData: Icons.access_time,
+                        onTap: _selectbackTime),
                   ],
                 ),
               ),
@@ -332,83 +236,53 @@ class _AddPermintaanUserState extends State<AddPermintaanUser> {
                 key: formKeys[3],
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: _dateController,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                          labelText: 'Tanggal Berangkat',
-                          filled: true,
-                          prefixIcon: Icon(Icons.calendar_today),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: true,
+                        onTap: () {},
+                        TextController: _dateController,
+                        labelText: 'Tanggal Berangkat',
+                        validatorText: 'Tanggal Berangkat tidak boleh kosong',
+                        iconData: Icons.calendar_today),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _timeController,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                          labelText: 'Jam Berangkat',
-                          filled: true,
-                          prefixIcon: Icon(Icons.access_time),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: true,
+                        TextController: _timeController,
+                        labelText: 'Jam Berangkat',
+                        validatorText: 'Jam berangkat tidak boleh kosong',
+                        iconData: Icons.access_time,
+                        onTap: () {}),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _tujuanController,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                          labelText: 'Tujuan',
-                          filled: true,
-                          prefixIcon: Icon(Icons.pin_drop),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: false,
+                        TextController: _tujuanController,
+                        labelText: 'Tujuan',
+                        validatorText: 'Tujuan tidak boleh kosong',
+                        iconData: Icons.pin_drop,
+                        onTap: () {}),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _kegiatanController,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                          labelText: 'Kegiatan',
-                          filled: true,
-                          prefixIcon: Icon(Icons.directions_walk),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: false,
+                        TextController: _kegiatanController,
+                        labelText: 'Kegiatan',
+                        validatorText: 'Kegiatan tidak boleh kosong',
+                        iconData: Icons.directions_walk,
+                        onTap: () {}),
                     const SizedBox(
                       height: 20,
                     ),
-                    TextFormField(
-                      controller: _timebackController,
-                      readOnly: true,
-                      decoration: const InputDecoration(
-                          labelText: 'Jam Kembali (Perkiraan)',
-                          filled: true,
-                          prefixIcon: Icon(Icons.access_time),
-                          prefixIconColor: Warna.utama,
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Warna.utama))),
-                    ),
+                    textFormField(
+                        isreadOnly: true,
+                        TextController: _timebackController,
+                        labelText: 'Jam Kembali (Perkiraan)',
+                        validatorText: 'Jam kembali tidak boleh kosong',
+                        iconData: Icons.access_time,
+                        onTap: () {}),
                   ],
                 ),
               ),
