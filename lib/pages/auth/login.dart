@@ -112,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                       children: AnimateList(
                     interval: 200.ms,
-                    effects: [SlideEffect(duration: 150.ms)],
+                    effects: [FadeEffect(duration: 150.ms)],
                     children: [
                       const SizedBox(
                         height: 50,
