@@ -3,8 +3,10 @@ import 'package:anterin_kc_pky/pages/auth/intro.dart';
 import 'package:anterin_kc_pky/pages/driver/layout.dart';
 import 'package:anterin_kc_pky/pages/user/layout.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_web_frame/flutter_web_frame.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,21 +29,30 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Warna.utama),
-          useMaterial3: true,
-          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
-        ),
-        home: role == ""
-            ? const IntroductionPage()
-            : role == "driver"
-                ? const DriverLayout()
-                : role == "user"
-                    ? const UserLayout()
-                    : role == "admin"
-                        ? const AdminLayout()
-                        : const IntroductionPage());
+    return FlutterWebFrame(
+      clipBehavior: Clip.hardEdge,
+      maximumSize: Size(414, 896),
+      enabled: kIsWeb,
+      backgroundColor: Colors.grey,
+      builder: (context) {
+        return MaterialApp(
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Warna.utama),
+              useMaterial3: true,
+              textTheme:
+                  GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
+            ),
+            home: role == ""
+                ? const IntroductionPage()
+                : role == "driver"
+                    ? const DriverLayout()
+                    : role == "user"
+                        ? const UserLayout()
+                        : role == "admin"
+                            ? const AdminLayout()
+                            : const IntroductionPage());
+      },
+    );
   }
 }

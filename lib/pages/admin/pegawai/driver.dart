@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, duplicate_ignore
 import 'package:anterin_kc_pky/models/admin/user_model.dart';
-import 'package:anterin_kc_pky/services/admin.dart';
+import 'package:anterin_kc_pky/services/admin/admin.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:anterin_kc_pky/shared/constant.dart';
 import 'package:flutter/material.dart';

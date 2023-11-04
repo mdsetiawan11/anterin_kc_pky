@@ -1,5 +1,5 @@
 import 'package:anterin_kc_pky/models/admin/permintaan_model.dart';
-import 'package:anterin_kc_pky/services/admin.dart';
+import 'package:anterin_kc_pky/services/admin/admin.dart';
 import 'package:anterin_kc_pky/shared/colors.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
